@@ -1,34 +1,43 @@
 var login=document.getElementById("loginbtn");
 var username=document.getElementById("username");
 var pass=document.getElementById("password");
-var tasks=[];
+var label = document.getElementById("incorrect")
+// login.onclick=function(){
+//     console.log("hi");
+// }
+
 login.addEventListener("click",function(event){
     if(username.value==""||pass.value=="")
         alert("Please insert all values");
     else{
-        var ob=new Object();
-        ob.username1=username.value;
-        ob.pass1=pass.value;
-        console.log(ob);
-       var request = new XMLHttpRequest();
-    var file_name = "/productlogin";
-    request.open('POST',file_name);
-        request.setRequestHeader("Content-Type","application/json");
-    request.send(JSON.stringify(ob))
-    request.addEventListener("load",function()
-    {
-        if(request.responseText=="1")
-            window.location="/profile";
-        else if(request.responseText=="-1")
-        window.location="/deactivate";
-        else if(request.responseText=="new")
-        window.location="/usercommunities";
-        else if(request.responseText=="user")
-         window.location="/simpleusercommunities";
-        else if(request.responseText=="update")
-            window.location="/firstuser";
-         else
-                alert("Invalid username");
-    }); 
+        var user=new Object();
+        user.email=username.value;
+        user.password=pass.value;
+        console.log(user);
+        fetch('/login',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            console.log(data);
+            if(data == "admin"){
+                window.location="/admin";
+            }else if(data == "user"){
+                window.location="/user";
+            }else if(data == "not found"){
+                alert("User Not Registered");
+            }else if(data == "incorrect"){
+                label.style.visibility="visible";
+            }else{
+                alert("Please try after some time");
+            }
+        })
+        .catch(error=>{
+            console.log(error);
+        });
     }
 });
