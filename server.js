@@ -3,35 +3,23 @@ var express=require('express')
 var path = require('path')
 var bodyparser = require('body-parser')
 var app=express();
+var ejs = require("ejs");
 var port=5000 || process.env.PORT;
 const user = require('./models/user');
+
 const adminRouter = require('./routers/adminRouter');
+const loginRouter=require('./routers/loginRouter');
+
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 app.listen(port,()=>{
     console.log(`App is running on port `+port);
 });
 
 app.use(bodyparser.json());
-
-
-app.post('/login',(req,res)=>{
-    console.log(req.body.email);
-
-    user.findOne({email: req.body.email}).then((user)=>{
-        if(user){
-            if(user.password == req.body.password){
-                res.send(JSON.stringify(user.role));
-            }else{
-                res.send(JSON.stringify("incorrect"));
-            }
-        }else{
-            res.send(JSON.stringify("not found"));
-        }
-        console.log(user);
-    }).catch(err=>{
-        res.send(JSON.stringify("err"));
-    });
-});
-
+app.use('/login',loginRouter);
 app.use("/admin",adminRouter);

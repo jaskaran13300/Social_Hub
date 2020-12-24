@@ -26,18 +26,21 @@ login.addEventListener("click",function(event){
             console.log(data);
             if(data == "admin"){
                 window.location="/admin";
-            }else if(data == "user"){
+            }
+            else if(data == "user"){
                 window.location="/user";
-            }else if(data == "not found"){
+            }
+            else if(data == "not found"){
                 alert("User Not Registered");
             }else if(data == "incorrect"){
                 label.style.visibility="visible";
             }else{
-                alert("Please try after some time");
+                alert("You are not able to login kindly infor your issue on ... ");
             }
         })
         .catch(error=>{
             console.log(error);
+            // alert(error)
         });
     }
 });
