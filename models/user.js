@@ -47,6 +47,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         lowercase:true,
         default: "user"
+    },
+    image_name:{
+        type:String,
+        default:"default.png"
     }
 });
 

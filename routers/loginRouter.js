@@ -8,6 +8,9 @@ router.post('/', (req, res) => {
     user.findOne({ email: req.body.email }).then((user) => {
         if (user) {
             if (user.password == req.body.password) {
+                req.session.user = user
+                req.session.loggedIn = 1
+
                 res.send(JSON.stringify(user.role));
             } else {
                 res.send(JSON.stringify("incorrect"));
@@ -16,6 +19,7 @@ router.post('/', (req, res) => {
             res.send(JSON.stringify("not found"));
         }
         console.log(user);
+        
     }).catch(err => {
         res.send(JSON.stringify("err"));
     });

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Social Hub</title>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    
+     <link href="menu.css" rel="stylesheet" type="text/css">
+    <link href="sidebar.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
+    </script>
+      
+      
+      
+      
+       <style>
+           .active {
+			background-color: #51a1e2 !important;
+		}
+           .content-div{
+  margin-top:2%;
+  width: 100%;
+}
+.null-link{
+  color: black
+}
+.null-link:hover{
+  color:black;
+  text-decoration: none;
+}
+.panel-main-div:hover{
+  box-shadow:0 3px 10px 0 rgba(115,143,147,.2);
+}
+@media(max-width: 768px){
+  .content-div{
+    margin-top:5%;
+    width: 100% !important;
+  }
+/*
+           .div-min-width
+    {
+        width:360px;
+    }
+*/
+   #cont
+    {
+       padding:0;
+    }
+}
+           </style>
+</head>
+
+<body class="body">
+  <center>
+                                    <div id="delModal1" class="modal fade" role = "dialog" style="background:#404F65;opacity:.5;z-index:9999;">
+                                        <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
+                                            <div id="move" class="modal-content" style="background:transparent;border:0;box-shadow:0px 0px 0px 0px">
+                                                <div class="modal-header" style="border-bottom:0">
+                                                    <h2 style="color:#FAFBFB" class="modal-title">Confirm Logout</h2>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p style="color:white">Do you really want logout? </p>
+                                                </div>
+                                                <div class="modal-footer" style="border-top:0;text-align:center">
+                                                    <button id="log" type="button" class="btn btn-default" style="background:#303F53;border:0;color:white;width:28%;height:15%">Yes</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background:#303F53;border:0;color:white;width:28%;height:15%">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </center>
+  <%- include('partials/menu.html'); %>
+  <div id="viewscreen">
+  <%- include('partials/adminsidebar.html'); %>
+  <div id="rightview">
+  
+              <center>
+                                    <div id="delModal" class="modal fade" role = "dialog">
+                                        <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Switch As User</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really want switch state... </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="ya" type="button" class="btn btn-success">Yes</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </center>
+               <div class="content-div">
+<div class="container div-min-width" id="cont">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-8" style="background-color:#fff;border:5px solid rgba(0,0,0,0.1);margin-top:10px">
+      <br>
+
+
+      <div class="alert alert-dismissible" style="border:1px solid #E2E5E1" id="alert-div-avilability">
+          <center>
+            <label id="avilability"></label>
+          </center>
+      </div>
+
+          <h1>Add User</h1>
+          <form class="form-horizontal" autocomplete="nope" role="form" action="/admin/add" method="POST">
+            <div class="col-sm-12">
+              <div class="form-group">
+                  <input type="text"  name="fullname" class="form-control" id="name" placeholder="Name" required><br>
+              </div>
+
+                <div class="form-group">
+                    <input type="email"  name="username" class="form-control" id="email" placeholder="Email"  autocorrect="off" required><br>
+                </div>
+                <div class="form-group">
+                    <input id="userpassword" type="password"  name="password" class="form-control" placeholder="User Password" autocorrect="off" required><br>
+                </div>
+
+              <div class="form-group">
+                  <input type="text"  name="phone" class="form-control" id="phone" placeholder="Phone" minlength="10" maxlength="10" pattern="[6789][0-9]{9}" required><br>
+              </div>
+              <div class="form-group">
+                  <input id="city" type="text" name="city" class="form-control" placeholder="City" required><br>
+              </div>
+              <div class="form-group">
+                  <select id="gender" data-style="btn-info" name="gender" class="form-control" required>
+                    <optgroup label="Select Gender">
+                      <option>Male</option>
+                        <option>Female</option>
+                    </optgroup>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                  <input id="dob" type="date"  name="dob" class="form-control" placeholder="DOB" required><br>
+              </div>
+
+              <div class="form-group">
+                <label>Role:</label><br>
+                <select id="userrole" data-style="btn-info" name="roleoptions" class="form-control">
+                    <optgroup label="Select User Role">
+                      <option>User</option>
+                        <option>Community_Builder</option>
+                      <option>Admin</option>
+                    </optgroup>
+                </select>
+              </div>
+              <div class="form-group">
+                  <input id="addbtn1" type="submit" value="Add User" class="btn btn-success">
+                  <a id="cancel" value="Add User" class="btn btn-danger">Cancel</a>
+              </div>
+              </div>
+          </form>
+      </div>
+</div>
+</div>
+             </div>
+      </div>
+
+             </body>
+             
+
+
+<script>
+var selector = '.nav li';
+$(selector).removeClass('active');
+$('#add-user-nav').addClass('active');
+</script>
+
+             
+<script type="text/javascript">
+     var list =sidebar.getElementsByTagName("li");
+    for(var i = 0;i<list.length;i++) {
+        list[i].classList.remove("active");
+    }
+    list[3].classList.add("active");
+	 function openbar()
+{
+    var element = document.getElementById("viewscreen");
+    element.classList.toggle("toggle-pc");
+    var element = document.getElementById("sidebar");
+    element.classList.toggle("sidebar-width");
+    var element = document.getElementById("rightview");
+    element.classList.toggle("set-rightview");
+}
+    
+    var add1=document.getElementById("addbtn1");
+    var cancel=document.getElementById("cancel");
+    var name1=document.getElementById("name");
+    var email=document.getElementById("email");
+    var userpassword=document.getElementById("userpassword");
+    var phone=document.getElementById("phone");
+    var city=document.getElementById("city");
+    var gender=document.getElementById("gender");
+    var dob=document.getElementById("dob");
+    var role=document.getElementById("userrole");
+    // add1.addEventListener("click",function(event)
+    //                     {
+    //     var str=email.value;
+    //     var t=0,s=0;
+    //     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    //     if(str.match(mailformat))
+    //     {
+    //         s=1;
+    //     }
+    //     else
+    //     {
+    //         s=0;
+    //     }      
+    //    var  pno=phone.value;
+    //    if(name1.value==""||email.value==""||userpassword.value==""||city.value==""||dob.value==""||phone.value==""||gender.value==""||role.value=="")
+    //         alert("Please insert all values");
+    //     else if(pno.length!=10)
+    //         alert("Please enter 10 digit in Phoneno");
+    //     else if(s==0)
+    //         alert("Please enter Email in correct mannner");
+            
+    //     else
+    //     {
+    //         var ob=new Object();
+    //         ob.name=name1.value;
+    //         ob.emailid=email.value;
+    //         ob.password=userpassword.value;
+    //         ob.city=city.value;
+    //         ob.dob=dob.value;
+    //         ob.phoneno=phone.value;
+    //         ob.gender=gender.value;
+    //         ob.role=role.value;
+    //         ob.status="Pending";
+    //         ob.restrict="1";
+    //         ob.first="true";
+    //         ob.photoname="/default.png";            
+    //         var xhr=new XMLHttpRequest();
+    //         xhr.open("POST","/adduser1");
+    //         xhr.setRequestHeader("Content-Type","application/json");
+    //         xhr.send(JSON.stringify(ob));
+    //         xhr.onload=function()
+    //         {
+    //             if(xhr.responseText=='0')
+    //                 alert("User already present");
+    //             else
+    //                 alert("User added");
+    //         }
+    //     }
+    // });
+    cancel.addEventListener("click",function(event)
+    {
+        window.location="/admin";
+    });
+    var home=document.getElementById("home");
+    home.addEventListener("click",function(event)
+    {
+        window.location="/admin";
+    });
+    var editbtn=document.getElementById("editbtn");
+    editbtn.addEventListener("click",function(event)
+    {
+        window.location="/edit";
+    });
+     var createtag=document.getElementById("tagpanel");
+    createtag.addEventListener("click",function(event)
+    {
+        window.location="/createtag"; 
+    });
+    var changepass=document.getElementById("change");
+    changepass.addEventListener("click",function(event)
+    {
+        window.location="/changepass";
+    });
+     var userlt=document.getElementById("userslist");
+    userlt.onclick=function()
+    {
+        window.location="/userlist";
+    }
+    var community=document.getElementById("community");
+    community.onclick=function()
+    {
+        window.location="/communities";
+    }
+    var switch1=document.getElementById("switch");
+    switch1.setAttribute("data-toggle","modal");
+    switch1.setAttribute("data-target","#delModal");
+    var ya=document.getElementById("ya");
+    ya.onclick=function()
+    {
+        window.location="admincommunities";
+    }
+    var logout=document.getElementById("logout");
+    logout.setAttribute("data-toggle","modal");
+    logout.setAttribute("data-target","#delModal1");
+    var yas=document.getElementById("log");
+    yas.onclick=function()
+    {
+       window.location="/";
+    }
+     dragElement(document.getElementById("move"));
+  function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    elmnt.onmousedown = dragMouseDown;
+  }
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+   
+     
+</script>
+</html>

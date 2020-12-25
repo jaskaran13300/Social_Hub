@@ -2,9 +2,6 @@ var login=document.getElementById("loginbtn");
 var username=document.getElementById("username");
 var pass=document.getElementById("password");
 var label = document.getElementById("incorrect")
-// login.onclick=function(){
-//     console.log("hi");
-// }
 
 login.addEventListener("click",function(event){
     if(username.value==""||pass.value=="")
@@ -35,7 +32,7 @@ login.addEventListener("click",function(event){
             }else if(data == "incorrect"){
                 label.style.visibility="visible";
             }else{
-                alert("You are not able to login kindly infor your issue on ... ");
+                alert("You are not able to login kindly infor your issue on socialhub@gmail.com ");
             }
         })
         .catch(error=>{

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Social Hub</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link href="menu.css" rel="stylesheet" type="text/css">
+    <link href="sidebar.css" rel="stylesheet" type="text/css">
 
-
-
-        <link href="menu.css" rel="stylesheet" type="text/css">
-        <link href="sidebar.css" rel="stylesheet" type="text/css">
         <!-- BOOTSTRAP 3-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -25,14 +21,14 @@
                 background-color: #51a1e2 !important;
             }
 
+            #container_id {
+                width: 90%;
+            }
+
             .content-div {
                 margin-top: 2%;
                 margin-left: 50px;
                 width: 100%;
-            }
-
-            #container_id {
-                width: 90%;
             }
 
             .null-link {
@@ -77,7 +73,8 @@
     <center>
         <div id="delModal1" class="modal fade" role="dialog" style="background:#404F65;opacity:.5;z-index:9999;">
             <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
-                <div id="move" class="modal-content" style="background:transparent;border:0;box-shadow:0px 0px 0px 0px">
+                <div id="move" class="modal-content"
+                    style="background:transparent;border:0;box-shadow:0px 0px 0px 0px;z-index:9999">
                     <div class="modal-header" style="border-bottom:0">
                         <h2 style="color:#FAFBFB" class="modal-title">Confirm Logout</h2>
                     </div>
@@ -94,16 +91,27 @@
             </div>
         </div>
     </center>
-    <%- include ('partials/menu.html'); %>
+    <%- include('partials/menu.html'); %>
         <div id="viewscreen">
             <%- include('partials/adminsidebar.html'); %>
                 <div id="rightview">
+                    <!--
+            <div class="container" id="profiledata" style="margin-top:50px;width:70%;background-color:white;box-shadow:0px 0px 10px grey;padding:10px;box-sizing:border-box;float:left;margin-left:140px;" >
+                <div class="container-fluid" style="width:100%;height:130px;"><i style="font-size:100px;color:grey;float:left;" class="fa fa-user" aria-hidden="true"></i></div>
+                
+                
+                
+              
+                
+                
+            </div>
+-->
                     <center>
                         <div id="delModal" class="modal fade" role="dialog">
                             <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Switch As Admin</h4>
+                                        <h4 class="modal-title">Switch As User</h4>
                                     </div>
                                     <div class="modal-body">
                                         <p>Do you really want switch state... </p>
@@ -125,7 +133,7 @@
 
                                     <div class="d-flex pc">
                                         <div class="image-container">
-                                            <img src="img.jpg" style="height:150px;width:150px"
+                                            <img src="<%=user.image_name%>" style="height:150px;width:150px"
                                                 id="user-profile-image" class="img-thumbnail allSideSoft" />
                                         </div>
                                     </div>
@@ -140,7 +148,7 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">Email</div>
                                             <div class="panel-body">
-                                                myemail@gmail.com
+                                                <%=user.email%>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +159,7 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">Gender</div>
                                             <div class="panel-body" style="text-transform: capitalize;">
-                                                My gender
+                                                <%=user.gender%>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +170,7 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">Name</div>
                                             <div class="panel-body">
-                                                My name
+                                                <%=user.name%>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +181,7 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">City</div>
                                             <div class="panel-body">
-                                                My city
+                                                <%=user.city%>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +192,7 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">D.O.B</div>
                                             <div class="panel-body null-link" id="dobtext">
-                                                My dob
+                                                <%=user.dob%>
                                             </div>
                                         </div>
                                     </div>
@@ -195,10 +203,18 @@
                                         <div class="panel panel-default panel-main-div">
                                             <div class="panel-heading">Phone</div>
                                             <div class="panel-body">
-                                                My phn
+                                                <%=user.phone%>
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
+
+
+
+
 
 
                                 </div>
@@ -209,12 +225,7 @@
         </div>
 </body>
 <script type="text/javascript">
-    var list = sidebar.getElementsByTagName("li");
-    for (var i = 0; i < list.length; i++) {
-        list[i].classList.remove("active");
 
-    }
-    list[2].classList.add("active");
     function openbar() {
         var element = document.getElementById("viewscreen");
         element.classList.toggle("toggle-pc");
@@ -222,30 +233,61 @@
         element.classList.toggle("sidebar-width");
         var element = document.getElementById("rightview");
         element.classList.toggle("set-rightview");
+
     }
-    var add = document.getElementById("communities");
+    var add = document.getElementById("add");
     add.addEventListener("click", function (event) {
-        window.location = "/admincommunities";
-    });
-    var changepass = document.getElementById("change");
-    changepass.addEventListener("click", function (event) {
-        window.location = "/adminchangepass";
+        window.location = "/admin/add";
     });
     var editbtn = document.getElementById("editbtn");
     editbtn.addEventListener("click", function (event) {
-        window.location = "/adminedit";
+        window.location = "/edit";
     });
-
+    var createtag = document.getElementById("tagpanel");
+    createtag.addEventListener("click", function (event) {
+        window.location = "/createtag";
+    });
+    var changepass = document.getElementById("change");
+    changepass.addEventListener("click", function (event) {
+        window.location = "/changepass";
+    });
+    var userlt = document.getElementById("userslist");
+    userlt.onclick = function () {
+        window.location = "/userlist";
+    }
     var switch1 = document.getElementById("switch");
     switch1.setAttribute("data-toggle", "modal");
     switch1.setAttribute("data-target", "#delModal");
     var ya = document.getElementById("ya");
     ya.onclick = function () {
-        window.location = "/profile";
+        window.location = "/admincommunities";
+    }
+    var community = document.getElementById("community");
+    community.onclick = function () {
+        window.location = "/communities";
     }
     var logout = document.getElementById("logout");
     logout.setAttribute("data-toggle", "modal");
     logout.setAttribute("data-target", "#delModal1");
+    //   logout.addEventListener("click",function(event){
+    //       alert('a');
+    //        $.confirm({
+    //            title: 'Confirm Logout',
+    //            boxWidth: '20%',
+    //            theme: 'supervan',
+    //            backgroundDismissAnimation: 'random',
+    //            useBootstrap: false,
+    //            content: 'Do you really want logout?',
+    //            buttons: {
+    //                Yes: function () {
+    //                    window.location = '/logout';
+    //                },
+    //                No: function () {
+    //                // $.alert('No');
+    //                }
+    //            }
+    //        });
+    //    });
     var yas = document.getElementById("log");
     yas.onclick = function () {
         window.location = "/";
