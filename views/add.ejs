@@ -6,8 +6,8 @@
     <title>Social Hub</title>
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
     
-     <link href="menu.css" rel="stylesheet" type="text/css">
-    <link href="sidebar.css" rel="stylesheet" type="text/css">
+     <!-- <link href="menu.css" rel="stylesheet" type="text/css">
+    <link href="sidebar.css" rel="stylesheet" type="text/css"> -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -103,15 +103,15 @@
     <div class="col-sm-8" style="background-color:#fff;border:5px solid rgba(0,0,0,0.1);margin-top:10px">
       <br>
 
-
-      <div class="alert alert-dismissible" style="border:1px solid #E2E5E1" id="alert-div-avilability">
+       <!-- to be checked -->
+      <!-- <div class="alert alert-dismissible" style="border:1px solid #E2E5E1" id="alert-div-avilability">
           <center>
             <label id="avilability"></label>
           </center>
-      </div>
+      </div> -->
 
           <h1>Add User</h1>
-          <form class="form-horizontal" autocomplete="nope" role="form" action="/admin/add" method="POST">
+          <form class="form-horizontal" autocomplete="nope" role="form">
             <div class="col-sm-12">
               <div class="form-group">
                   <input type="text"  name="fullname" class="form-control" id="name" placeholder="Name" required><br>
@@ -202,8 +202,8 @@ $('#add-user-nav').addClass('active');
     var gender=document.getElementById("gender");
     var dob=document.getElementById("dob");
     var role=document.getElementById("userrole");
-    // add1.addEventListener("click",function(event)
-    //                     {
+    add1.addEventListener("click",function(event)
+                        {
     //     var str=email.value;
     //     var t=0,s=0;
     //     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -225,32 +225,47 @@ $('#add-user-nav').addClass('active');
             
     //     else
     //     {
-    //         var ob=new Object();
-    //         ob.name=name1.value;
-    //         ob.emailid=email.value;
-    //         ob.password=userpassword.value;
-    //         ob.city=city.value;
-    //         ob.dob=dob.value;
-    //         ob.phoneno=phone.value;
-    //         ob.gender=gender.value;
-    //         ob.role=role.value;
-    //         ob.status="Pending";
-    //         ob.restrict="1";
-    //         ob.first="true";
-    //         ob.photoname="/default.png";            
-    //         var xhr=new XMLHttpRequest();
-    //         xhr.open("POST","/adduser1");
-    //         xhr.setRequestHeader("Content-Type","application/json");
-    //         xhr.send(JSON.stringify(ob));
-    //         xhr.onload=function()
-    //         {
-    //             if(xhr.responseText=='0')
-    //                 alert("User already present");
-    //             else
-    //                 alert("User added");
-    //         }
-    //     }
-    // });
+            var ob=new Object();
+            ob.name=name1.value;
+            ob.email=email.value;
+            ob.password=userpassword.value;
+            ob.city=city.value;
+            ob.dob=dob.value;
+            ob.phone=phone.value;
+            ob.gender=gender.value;
+            ob.role=role.value;
+            // ob.status="Pending";
+            // ob.restrict="1";
+            // ob.first="true";
+            ob.photo="/default.png";   
+            
+            fetch('/admin/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ob)
+              })
+                .then(response => response.json())
+                .then(data => {
+                  console("data is",data)
+                  if(data=="1"){
+                    alert("User Added");
+                  }
+                  else if(data=="0"){
+                    alert("User Already Present")
+                  }
+                  else{
+                    console.log("HERE******")
+                    alert("Unable to add user kindly contact admin")
+                  }
+                })
+                .catch(error => {
+                  console.log("IN CATCHHHH****************");
+                  // alert("Unable to add user kindly contact admin")
+                });
+        // }
+    });
     cancel.addEventListener("click",function(event)
     {
         window.location="/admin";

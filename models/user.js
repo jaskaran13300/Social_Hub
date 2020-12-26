@@ -56,4 +56,17 @@ var userSchema = new mongoose.Schema({
 
 const user = mongoose.model("users", userSchema);
 
+
+userSchema.methods.addUser = async function (newUser) {
+    const userr=newUser
+    try{
+        await userr.save();
+    }
+    catch(error){
+        console.log(error);
+    }
+    
+}
+
+
 module.exports = user;

@@ -1,11 +1,14 @@
 const User = require('../models/user');
 
 const auth = async (req, res, next) => {
-    if(req.session.loggedIn==1){
+    console.log("auth cakkedd");
+    if(req.session.loggedIn=="1"){
         next();
     }
     else{
-        res.redirect('index.html')
+        res.redirect('/login') //get req called
+        // res.redirect('index') ->checks for admin/index
+        // render checks in views
     }
 }
 module.exports = auth;
