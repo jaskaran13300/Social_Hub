@@ -248,23 +248,19 @@ $('#add-user-nav').addClass('active');
               })
                 .then(response => response.json())
                 .then(data => {
-                  console("data is",data)
                   if(data=="1"){
                     alert("User Added");
                   }
                   else if(data=="0"){
-                    alert("User Already Present")
+                    alert("User Already Present") 
                   }
                   else{
-                    console.log("HERE******")
                     alert("Unable to add user kindly contact admin")
                   }
                 })
                 .catch(error => {
-                  console.log("IN CATCHHHH****************");
-                  // alert("Unable to add user kindly contact admin")
+                  alert("Unable to add user kindly contact admin")
                 });
-        // }
     });
     cancel.addEventListener("click",function(event)
     {

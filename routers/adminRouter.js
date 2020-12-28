@@ -24,8 +24,7 @@ router.post('/add', auth, admin_auth,async (req,res)=>{
         return res.send("1")
     }
     catch(error){
-        console.log("In ERROR")
-        // console.log(error)
+        console.log(error)
         return res.send("0");
     }    
 })
