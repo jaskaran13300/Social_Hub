@@ -5,7 +5,7 @@
     <div class="col-sm-8" style="background-color:#fff;border:5px solid rgba(0,0,0,0.1);margin-top:10px">
       <br>
       <h1>Add User</h1>
-      <!-- <form class="form-horizontal" autocomplete="nope" role="form"> -->
+      <!-- <form class="form-horizontal" autocomplete="no" enctype="application/x-www-form-urlencoded" role="form"> -->
         <div class="col-sm-12">
           <div class="form-group">
             <input type="text" name="fullname" class="form-control" id="name" placeholder="Name" required><br>
@@ -71,41 +71,55 @@
     var dob = document.getElementById("dob");
     var role = document.getElementById("userrole");
     add1.addEventListener("click", function (event) {
-      var ob = new Object();
-      ob.name = name1.value;
-      ob.email = email.value;
-      ob.password = userpassword.value;
-      ob.city = city.value;
-      ob.dob = dob.value;
-      ob.phone = phone.value;
-      ob.gender = gender.value;
-      ob.role = role.value;
-      // ob.status="Pending";
-      // ob.restrict="1";
-      // ob.first="true";
-      // ob.image_name="default.png";   
+      if(validateForm()){
+        var ob = new Object();
+        ob.name = name1.value;
+        ob.email = email.value;
+        ob.password = userpassword.value;
+        ob.city = city.value;
+        ob.dob = dob.value;
+        ob.phone = phone.value;
+        ob.gender = gender.value;
+        ob.role = role.value;
+        // ob.status="Pending";
+        // ob.restrict="1";
+        // ob.first="true";
+        // ob.image_name="default.png";   
 
-      fetch('/admin/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ob)
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data == "1") {
-            alert("User Added");
-            window.location = "/admin/add"
-          }
-          else if (data == "0") {
-            alert("User Already Present")
-            email.value="";
-            password.value="";
-          }
+        fetch('/admin/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ob)
         })
-        .catch(error => {
-          alert("Unable to add user kindly contact admin")
-        });
+          .then(response => response.json())
+          .then(data => {
+            if (data == "1") {
+              alert("User Added");
+              window.location = "/admin/add"
+            }
+            else if (data == "0") {
+              alert("User Already Present")
+              email.value="";
+              userpassword.value="";
+            }else{
+                alert("****************Unable to add user kindly contact admin")
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            alert("Unable to add user kindly contact admin")
+          });
+      }
     });
+
+    function validateForm(){
+      if(name1.value == "" || email.value == "" || userpassword.value == "" || phone.value == "" ||city.value == "" 
+      || gender.value == "" || dob.value==""){
+        alert("Fill All the values");
+        return false;
+      }
+      return true;
+    }
 </script>

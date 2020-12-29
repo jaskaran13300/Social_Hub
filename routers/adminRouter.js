@@ -19,15 +19,23 @@ router.get('/add',async (req,res)=>{
 })
 
 router.post('/add',async (req,res)=>{
-    const person=new user(req.body);
-    try{
-        await person.save()
-        return res.send("1")
-    }
-    catch(error){
-        console.log(error)
-        return res.send("0");
-    }    
+
+    user.findOne({ email:req.body.email}).then( async userr=>{
+        if(userr){
+            return res.send("0");
+        }else{
+            const person=new user(req.body);
+            try{
+                await person.save()
+                res.end("1")
+            }
+            catch(error){
+                console.log(error)
+                res.end("-1");
+            }
+        }
+    });
+    
 })
 
 router.get('/edit',async(req,res)=>{
