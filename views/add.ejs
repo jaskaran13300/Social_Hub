@@ -237,7 +237,7 @@ $('#add-user-nav').addClass('active');
             // ob.status="Pending";
             // ob.restrict="1";
             // ob.first="true";
-            ob.photo="/default.png";   
+            // ob.image_name="default.png";   
             
             fetch('/admin/add', {
                 method: 'POST',
@@ -274,7 +274,7 @@ $('#add-user-nav').addClass('active');
     var editbtn=document.getElementById("editbtn");
     editbtn.addEventListener("click",function(event)
     {
-        window.location="/edit";
+        window.location="/admin/edit";
     });
      var createtag=document.getElementById("tagpanel");
     createtag.addEventListener("click",function(event)

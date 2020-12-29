@@ -12,7 +12,9 @@ router.get('/',auth,async (req,res)=>{
 });
 
 router.get('/add', auth, admin_auth,async (req,res)=>{
+    console.log("****",req.session.user);
     res.render('add',{
+        
         "user":req.session.user
     })
 })
@@ -27,6 +29,12 @@ router.post('/add', auth, admin_auth,async (req,res)=>{
         console.log(error)
         return res.send("0");
     }    
+})
+
+router.get('/edit',auth,async(req,res)=>{
+    res.render('edit',{
+        "user":req.session.user
+    })    
 })
 
 module.exports = router;

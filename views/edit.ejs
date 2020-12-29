@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Social Hub</title>
+    <title>cq</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <!-- <link href="menu.css" rel="stylesheet" type="text/css">
-    <link href="sidebar.css" rel="stylesheet" type="text/css"> -->
-
+        <link href="menu.css" rel="stylesheet" type="text/css">
+        <link href="sidebar.css" rel="stylesheet" type="text/css">
         <!-- BOOTSTRAP 3-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -16,19 +15,21 @@
         </script>
 
 
+
+
         <style>
             .active {
                 background-color: #51a1e2 !important;
-            }
-
-            #container_id {
-                width: 90%;
             }
 
             .content-div {
                 margin-top: 2%;
                 margin-left: 50px;
                 width: 100%;
+            }
+
+            #container_id {
+                width: 90%;
             }
 
             .null-link {
@@ -73,8 +74,7 @@
     <center>
         <div id="delModal1" class="modal fade" role="dialog" style="background:#404F65;opacity:.5;z-index:9999;">
             <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
-                <div id="move" class="modal-content"
-                    style="background:transparent;border:0;box-shadow:0px 0px 0px 0px;z-index:9999">
+                <div id="move" class="modal-content" style="background:transparent;border:0;box-shadow:0px 0px 0px 0px">
                     <div class="modal-header" style="border-bottom:0">
                         <h2 style="color:#FAFBFB" class="modal-title">Confirm Logout</h2>
                     </div>
@@ -106,6 +106,7 @@
                 
             </div>
 -->
+
                     <center>
                         <div id="delModal" class="modal fade" role="dialog">
                             <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
@@ -133,19 +134,24 @@
 
                                     <div class="d-flex pc">
                                         <div class="image-container">
+                                            <!-- <p><%=user.image_name%></p> -->
                                             <img src="<%=user.image_name%>" style="height:150px;width:150px"
                                                 id="user-profile-image" class="img-thumbnail allSideSoft" />
                                         </div>
                                     </div>
 
 
+                                    <div class="col-sm-12">
+                                        <button id="rename" style="float:right" type="button"
+                                            class="btn btn-primary">Edit</button>
+                                    </div>
 
 
                                     <br>
                                     <br>
 
                                     <div class="col-sm-6">
-                                        <div class="panel panel-default panel-main-div">
+                                        <div class="panel panel-default  panel-main-div">
                                             <div class="panel-heading">Email</div>
                                             <div class="panel-body">
                                                 <%=user.email%>
@@ -156,7 +162,7 @@
 
 
                                     <div class="col-sm-6">
-                                        <div class="panel panel-default panel-main-div">
+                                        <div class="panel panel-default  panel-main-div">
                                             <div class="panel-heading">Gender</div>
                                             <div class="panel-body" style="text-transform: capitalize;">
                                                 <%=user.gender%>
@@ -225,7 +231,10 @@
         </div>
 </body>
 <script type="text/javascript">
-
+    var list = sidebar.getElementsByTagName("li");
+    for (var i = 0; i < list.length; i++) {
+        list[i].classList.remove("active");
+    }
     function openbar() {
         var element = document.getElementById("viewscreen");
         element.classList.toggle("toggle-pc");
@@ -233,15 +242,14 @@
         element.classList.toggle("sidebar-width");
         var element = document.getElementById("rightview");
         element.classList.toggle("set-rightview");
-
     }
     var add = document.getElementById("add");
     add.addEventListener("click", function (event) {
-        window.location = "/admin/add";
+        window.location = "add";// /admin/add
     });
-    var editbtn = document.getElementById("editbtn");
-    editbtn.addEventListener("click", function (event) {
-        window.location = "/admin/edit";
+    var home = document.getElementById("home");
+    home.addEventListener("click", function (event) {
+        window.location = "/admin";
     });
     var createtag = document.getElementById("tagpanel");
     createtag.addEventListener("click", function (event) {
@@ -251,9 +259,17 @@
     changepass.addEventListener("click", function (event) {
         window.location = "/changepass";
     });
+    var update = document.getElementById("rename");
+    update.addEventListener("click", function (event) {
+        window.location = "/update";
+    });
     var userlt = document.getElementById("userslist");
     userlt.onclick = function () {
         window.location = "/userlist";
+    }
+    var community = document.getElementById("community");
+    community.onclick = function () {
+        window.location = "/communities";
     }
     var switch1 = document.getElementById("switch");
     switch1.setAttribute("data-toggle", "modal");
@@ -262,32 +278,9 @@
     ya.onclick = function () {
         window.location = "/admincommunities";
     }
-    var community = document.getElementById("community");
-    community.onclick = function () {
-        window.location = "/communities";
-    }
     var logout = document.getElementById("logout");
     logout.setAttribute("data-toggle", "modal");
     logout.setAttribute("data-target", "#delModal1");
-    //   logout.addEventListener("click",function(event){
-    //       alert('a');
-    //        $.confirm({
-    //            title: 'Confirm Logout',
-    //            boxWidth: '20%',
-    //            theme: 'supervan',
-    //            backgroundDismissAnimation: 'random',
-    //            useBootstrap: false,
-    //            content: 'Do you really want logout?',
-    //            buttons: {
-    //                Yes: function () {
-    //                    window.location = '/logout';
-    //                },
-    //                No: function () {
-    //                // $.alert('No');
-    //                }
-    //            }
-    //        });
-    //    });
     var yas = document.getElementById("log");
     yas.onclick = function () {
         window.location = "/";
