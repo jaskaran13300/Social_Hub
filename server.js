@@ -36,3 +36,7 @@ app.listen(port,()=>{
 app.use(bodyparser.json());
 app.use('/login',loginRouter);
 app.use("/admin",adminRouter);
+
+// app.get('/*',(req,res)=>{
+//     res.redirect('bad_req.html')
+// })
