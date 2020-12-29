@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
         next();
     }
     else{
-        res.redirect('/login') //get req called
+        res.redirect('/') //get req called
         // res.redirect('index') ->checks for admin/index
         // render checks in views
     }

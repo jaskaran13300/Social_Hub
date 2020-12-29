@@ -1,0 +1,62 @@
+<div class="content-div">
+    <div class="container div-min-width" id="cont">
+        <div class="col-sm-3">
+            <input id='hiddenPassword' style="visibility:hidden" value="<%=password%>">
+        </div>
+        <div class="col-sm-6" style="background-color:#fff;border:5px solid rgba(0,0,0,0.1);margin-top:40px">
+            <br>
+
+            <h1>Change Password</h1>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Old Password:</label>&nbsp;&nbsp;<br>
+                        <input type="password" required name="oldPassword" class="form-control" id="old" ><br />
+                    </div>
+                    <div class="form-group">
+                        <label>New Password:</label>&nbsp;&nbsp;<br>
+                        <input type="password" required name="newPassword" class="form-control" id="new" ><br />
+                    </div>
+                    <div class="form-group">
+                        <input id="submit" type="submit" value="Submit" class="btn btn-success">
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    var input = document.getElementById("hiddenPassword");
+    var submit = document.getElementById("submit");
+    var oldPassword = document.getElementById("old");
+    var newPassword = document.getElementById("new");
+
+    submit.addEventListener("click",function (event){
+        if(input.value != oldPassword.value){
+            alert("Wrong Old Password");
+        }else{
+            var obj = new Object();
+            obj.password = newPassword.value;
+            fetch("/changepassword", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data == "1") {
+                        alert("Paswword Updated");
+                    }
+                    else{
+                        alert("Try After Some time");
+                    }
+                    window.location = "/changepassword"
+                })
+                .catch(error => {
+                    alert("Unable to add user kindly contact admin")
+                });
+        }
+    });
+    
+</script>

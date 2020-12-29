@@ -1,0 +1,221 @@
+<style>
+    .active {
+        background-color: #51a1e2 !important;
+    }
+
+    #container_id {
+        width: 90%;
+    }
+
+    .content-div {
+        margin-top: 2%;
+        margin-left: 50px;
+        width: 100%;
+    }
+
+    .null-link {
+        color: black
+    }
+
+    .null-link:hover {
+        color: black;
+        text-decoration: none;
+    }
+
+    .panel-main-div:hover {
+        box-shadow: 0 3px 10px 0 rgba(115, 143, 147, .2);
+    }
+
+    #changephoto {
+        display: none;
+    }
+
+    .d-flex:hover #changephoto {
+
+        display: block !important;
+    }
+
+    @media(max-width: 768px) {
+        .content-div {
+            margin-top: 0;
+            margin-left: 0;
+            width: 100% !important;
+        }
+
+        #cont {
+            padding: 0;
+        }
+
+        #container_id {
+            width: auto;
+        }
+    }
+</style>
+
+
+<div class="content-div">
+    <!-- <div class="profile-pic-center-main-div mobile">
+        <img src="/<%=user.image_name%>" style="width:100px;height:100px;margin-top:52px;border-radius:50%">
+    </div> -->
+
+
+    <div class="container div-min-width" id="cont">
+        <div style="margin-top:10px;">
+            <div class="col-12">
+                <div class="card allSidesSoft" id="container_id">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <img src="/<%=user.image_name%>" id="user-profile-image"
+                                style="width: 150px; height: 150px" class="img-thumbnail allSidesSoft" />
+                                <input type="file" class="btn btn-default btn-sm"
+                                    style="width:250px;position:absolute;background:transparent;border:0" id="changephoto"
+                                    name="myImage" accept="image/*" />
+                            <!-- <form action="/upload" enctype="multipart/form-data" style="width:100%" method="POST"> -->
+                                <input type="submit" style="float:right;margin-top:110px" class="btn btn-primary"
+                                    value="Upload Photo" />
+                            <!-- </form> -->
+                        </div>
+                        <br /><br>
+                        <form>
+                            <div class="panel-group">
+                                <!--Form panel-->
+                                <div class="panel panel-default editUserPanel">
+                                    <div class="panel-heading">Basic Info</div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>Email :</label>
+                                            <input type="text" value=<%=user.email%> class="form-control"
+                                            name="username" disabled="true" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Name :</label>
+                                            <input id="username" type="text" value=<%=user.name%> class="form-control"
+                                            name="fullname" />
+                                        </div>
+                                        <div class="form-group col-sm-5" style="padding:0">
+                                            <label>DOB :</label>
+                                            <input id="dob" type="date" class="form-control" value=<%=user.dob%>
+                                            name="dob" placeholder="MM/DD/YYYY" type="text"/>
+                                        </div>
+                                        <div class="form-group col-sm-5 col-sm-push-2" style="padding:0">
+                                            <label>Gender :</label>
+                                            <select id="gender" name="gender" class="form-control">
+                                                <optgroup label="Select Gender">
+
+                                                    <option value="Male" selected>Male</option>
+
+
+
+                                                    <option value="Female">Female</option>
+
+
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default editUserPanel">
+                                    <div class="panel-heading">Contact Info</div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>Phone :</label>
+                                            <input id="phoneno" type="text" value=<%=user.phone%>
+                                            class="form-control" name="phone" maxlength="10" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>City :</label>
+                                            <input id="city" type="text" value=<%=user.city%> class="form-control"
+                                            name="city"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default editUserPanel">
+                                    <div class="panel-heading">Personal Info</div>
+                                    <div class="panel-body">
+
+                                        <div class="form-group">
+                                            <label>Interests :</label>
+                                            <input id="interests" class="form-control" placeholder="Enter interests..."
+                                                type="text" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Tell us a bit more about your journey:</label>
+                                            <textarea type="text" class="form-control"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>What are your expectations from the communities?</label>
+                                            <textarea type="text" class="form-control"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <div class="form-group">
+
+                                    <a href="/changepassword" id="changepass3" class="btn btn-warning pull-left btnEditForm"
+                                        style="margin:1px">Change Password</a>
+
+                                    <a id="cancel" class="btn btn-danger pull-right btnEditForm"
+                                        style="margin:1px">Cancel</a>
+                                    <input id="update" type="button" class="btn btn-primary pull-right btnEditForm"
+                                        style="margin:1px" value="Update" />
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+</div>
+
+<script>
+     var update = document.getElementById("update");
+        var username = document.getElementById("username");
+        var dob = document.getElementById("dob");
+        var gender = document.getElementById("gender");
+        var phoneno = document.getElementById("phoneno");
+        var city = document.getElementById("city");
+        update.addEventListener("click", function (event) {
+            
+            var obj = new Object();
+            obj.city = city.value;
+            obj.name = username.value;
+            obj.dob = dob.value;
+            obj.phone = phoneno.value;
+            obj.gender = gender.value;
+            
+
+            fetch('/admin/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data == "1") {
+                        alert("User Updated");
+                        window.location = "/admin"
+                    } else {
+                        alert("Try After Some Time");
+                    }
+                })
+                .catch(error => {
+                    alert("Unable to add user kindly contact admin")
+                });
+        });
+
+
+</script>
