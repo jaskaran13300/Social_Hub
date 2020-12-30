@@ -79,6 +79,7 @@
                         <form>
                             <div class="panel-group">
                                 <!--Form panel-->
+                                
                                 <div class="panel panel-default editUserPanel">
                                     <div class="panel-heading">Basic Info</div>
                                     <div class="panel-body">
@@ -89,12 +90,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Name :</label>
-                                            <input id="username" type="text" value=<%=user.name%> class="form-control"
+                                            <input id="username" type="text" value="<%=user.name%>" class="form-control"
                                             name="fullname" />
                                         </div>
                                         <div class="form-group col-sm-5" style="padding:0">
                                             <label>DOB :</label>
-                                            <input id="dob" type="date" class="form-control" value=<%=user.dob%>
+                                            <input id="dob" type="date" class="form-control" value="<%=user.dob%>"
                                             name="dob" placeholder="MM/DD/YYYY" type="text"/>
                                         </div>
                                         <div class="form-group col-sm-5 col-sm-push-2" style="padding:0">
@@ -114,18 +115,18 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <div class="panel panel-default editUserPanel">
                                     <div class="panel-heading">Contact Info</div>
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <label>Phone :</label>
-                                            <input id="phoneno" type="text" value=<%=user.phone%>
-                                            class="form-control" name="phone" maxlength="10" />
+                                            <input id="phoneno" type="text" value="<%=user.phone%>"
+                                            class="form-control" name="phone" maxlength="10" pattern="[6789][0-9]{9}"/>
                                         </div>
                                         <div class="form-group">
                                             <label>City :</label>
-                                            <input id="city" type="text" value=<%=user.city%> class="form-control"
+                                            <input id="city" type="text" value="<%=user.city%>" class="form-control"
                                             name="city"/>
                                         </div>
                                     </div>

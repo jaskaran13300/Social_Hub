@@ -22,7 +22,7 @@
 
           <div class="form-group">
             <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" minlength="10"
-              maxlength="10" pattern="[6789][0-9]{9}" required><br>
+              maxlength="10" pattern="^[789]\d{9}$" required><br>
           </div>
           <div class="form-group">
             <input id="city" type="text" name="city" class="form-control" placeholder="City" required><br>
@@ -59,7 +59,17 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var list = sidebar.getElementsByTagName("li");
+  for (var i = 0; i < list.length; i++) {
+    list[i].classList.remove("active");
+  }
+  list[3].classList.add("active");
+</script>
+
 <script>
+  
    var add1 = document.getElementById("addbtn1");
     var cancel = document.getElementById("cancel");
     var name1 = document.getElementById("name");
@@ -70,6 +80,10 @@
     var gender = document.getElementById("gender");
     var dob = document.getElementById("dob");
     var role = document.getElementById("userrole");
+    cancel.addEventListener('click', function (event) {
+      window.location = '/admin/add'
+    })
+
     add1.addEventListener("click", function (event) {
       if(validateForm()){
         var ob = new Object();
@@ -115,6 +129,10 @@
     });
 
     function validateForm(){
+      if(phone.value.length!=10){
+        alert("Invalid Phone Number")
+        return false;
+      }
       if(name1.value == "" || email.value == "" || userpassword.value == "" || phone.value == "" ||city.value == "" 
       || gender.value == "" || dob.value==""){
         alert("Fill All the values");

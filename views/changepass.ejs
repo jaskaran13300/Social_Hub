@@ -24,6 +24,22 @@
         </div>
     </div>
 </div>
+
+
+<!-- <script>
+    var selector = '.nav li';
+    $(selector).removeClass('active');
+    $('#add-user-nav').addClass('active');
+</script> -->
+
+<script type="text/javascript">
+    var list = sidebar.getElementsByTagName("li");
+    for (var i = 0; i < list.length; i++) {
+        list[i].classList.remove("active");
+    }
+    list[8].classList.add("active");
+</script>
+
 <script>
     var input = document.getElementById("hiddenPassword");
     var submit = document.getElementById("submit");
@@ -33,7 +49,11 @@
     submit.addEventListener("click",function (event){
         if(input.value != oldPassword.value){
             alert("Wrong Old Password");
-        }else{
+        }
+        else if(oldPassword.value==newPassword.value){
+            alert("Old Password and new Password cannot be same")
+        }
+        else{
             var obj = new Object();
             obj.password = newPassword.value;
             fetch("/changepassword", {
