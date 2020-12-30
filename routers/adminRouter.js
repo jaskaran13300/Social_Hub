@@ -62,4 +62,114 @@ router.post("/update",async (req,res)=>{
 
 })
 
+
+router.get("/userlist",(req, res)=>{
+    res.render("userlist",{user:req.session.user});
+})
+
+
+router.post('/users', function (req, res) {
+    var count;
+    console.log(req.body);
+    var string = JSON.stringify('order[0][column]');
+    var objectValue = JSON.parse(string);
+    console.log(req.body[objectValue]);
+    var order=req.body[objectValue];
+    string = JSON.stringify('order[0][dir]');
+    objectValue = JSON.parse(string);
+    var sortOrder = req.body[objectValue];
+    if (order == "0") {
+        if (sortOrder == "asc")
+            getdata("email", 1);
+        else
+            getdata("email", -1);
+    }
+    else if (order == 2) {
+        if (sortOrder == "asc")
+            getdata("city", 1);
+        else
+            getdata("city", -1);
+    }
+    else if (order == 3) {
+        if (sortOrder[0] == "asc")
+            getdata("status", 1);
+        else
+            getdata("status", -1);
+    }
+    else if (order[0] == 4) {
+        if (sortOrder[0] == "asc")
+            getdata("role", 1);
+        else
+            getdata("role", -1);
+    }
+
+    else {
+        getdata("email", 1);
+    }
+
+
+    function getdata(colname, sortorder) {
+        user.countDocuments(function (e, count) {
+            var start = parseInt(req.body.start);
+            var len = parseInt(req.body.length);
+            var role = req.body.role;
+            var status = req.body.status;
+            var string = JSON.stringify('search[value]');
+            var objectValue = JSON.parse(string);
+            var search = req.body[objectValue];
+            var getcount = 10;
+            // console.log(req.body.search.value.length);
+
+
+            var findobj = {};
+            console.log(role, status);
+            if (role != 'All') {
+                findobj.role = role;
+            }
+            else {
+                delete findobj["role"];
+            }
+            if (status != "All") { findobj.status = status; }
+            else {
+                delete findobj["status"];
+            }
+            if (search != '')
+                findobj["$or"] = [{
+                    "emailid": { '$regex': search, '$options': 'i' }
+                }, {
+                    "city": { '$regex': search, '$options': 'i' }
+                }
+                    , {
+                    "status": { '$regex': search, '$options': 'i' }
+                }
+                    , {
+                    "role": { '$regex': search, '$options': 'i' }
+                }]
+            else {
+                delete findobj["$or"];
+            }
+
+
+            user.find(findobj).countDocuments(function (e, coun) {
+                getcount = coun;
+            }).catch(err => {
+                console.error(err)
+                res.send(err)
+            })
+
+            user.find(findobj).skip(start).limit(len).sort({ [colname]: sortorder })
+                .then(data => {
+                    res.send({ "recordsTotal": count, "recordsFiltered": getcount, data })
+                })
+                .catch(err => {
+                    console.error(err)
+                    //  res.send(error)
+                })
+        });
+    }
+})
+
+
+
+
 module.exports = router;

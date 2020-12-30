@@ -51,6 +51,11 @@ var userSchema = new mongoose.Schema({
     image_name:{
         type:String,
         default:"default.png"
+    },
+    status:{
+        type:String,
+        lowercase:true,
+        default:"pending"
     }
 });
 
