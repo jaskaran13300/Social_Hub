@@ -56,6 +56,10 @@ var userSchema = new mongoose.Schema({
         type:String,
         lowercase:true,
         default:"pending"
+    },
+    restrict:{
+        type:String,
+        default:"0"
     }
 });
 

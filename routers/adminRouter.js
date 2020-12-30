@@ -63,26 +63,34 @@ router.post("/update",async (req,res)=>{
 })
 
 
-router.get("/userlist",(req, res)=>{
+
+
+router.get("/userlist",async (req, res)=>{
     res.render("userlist",{user:req.session.user});
 })
 
 
 router.post('/users', function (req, res) {
     var count;
-    console.log(req.body);
-    var string = JSON.stringify('order[0][column]');
+    console.log("****",req.body);
+    var string = JSON.stringify('order[0][column]');// which column
     var objectValue = JSON.parse(string);
-    console.log(req.body[objectValue]);
-    var order=req.body[objectValue];
-    string = JSON.stringify('order[0][dir]');
+    // console.log(req.body[objectValue]);
+    var order=req.body[objectValue];// column number
+    string = JSON.stringify('order[0][dir]');// asc or desc
     objectValue = JSON.parse(string);
-    var sortOrder = req.body[objectValue];
+    var sortOrder = req.body[objectValue];// sort order asc or desc
     if (order == "0") {
         if (sortOrder == "asc")
             getdata("email", 1);
         else
             getdata("email", -1);
+    }
+    else if (order == "1") {
+        if (sortOrder == "asc")
+            getdata("phone", 1);
+        else
+            getdata("phone", -1);
     }
     else if (order == 2) {
         if (sortOrder == "asc")
@@ -109,7 +117,10 @@ router.post('/users', function (req, res) {
 
 
     function getdata(colname, sortorder) {
+        
         user.countDocuments(function (e, count) {
+            console.log("***********",e,count);
+
             var start = parseInt(req.body.start);
             var len = parseInt(req.body.length);
             var role = req.body.role;
@@ -122,7 +133,7 @@ router.post('/users', function (req, res) {
 
 
             var findobj = {};
-            console.log(role, status);
+            console.log(role, status,"*************");
             if (role != 'All') {
                 findobj.role = role;
             }
@@ -135,12 +146,15 @@ router.post('/users', function (req, res) {
             }
             if (search != '')
                 findobj["$or"] = [{
-                    "emailid": { '$regex': search, '$options': 'i' }
+                    "email": { '$regex': search, '$options': 'i' }
                 }, {
                     "city": { '$regex': search, '$options': 'i' }
+                },
+                {
+                    "phone": { '$regex': search, '$options': 'i' }
                 }
-                    , {
-                    "status": { '$regex': search, '$options': 'i' }
+                , {
+                "status": { '$regex': search, '$options': 'i' }
                 }
                     , {
                     "role": { '$regex': search, '$options': 'i' }
@@ -159,6 +173,7 @@ router.post('/users', function (req, res) {
 
             user.find(findobj).skip(start).limit(len).sort({ [colname]: sortorder })
                 .then(data => {
+                    console.log(data)
                     res.send({ "recordsTotal": count, "recordsFiltered": getcount, data })
                 })
                 .catch(err => {
@@ -170,6 +185,19 @@ router.post('/users', function (req, res) {
 })
 
 
+
+router.post('/mail',async (req,res)=>{
+    res.send("1")
+})
+
+
+router.post('/updateuserlist',async (req,res)=>{
+    res.send("1")
+})
+
+router.post('/restrict', async (req, res) => {
+    res.send("0")
+})
 
 
 module.exports = router;

@@ -20,14 +20,14 @@
         font-weight: bold;
         box-shadow: 0px 0px 10px grey;
     }
-
-    #rolebtn {
+    /* admin,user,cb */
+    #rolebtn { 
         width: 70px;
         border: 2px solid #2D312C;
         background-color: #2D312C;
         color: #fff;
     }
-
+    /* all pending confirmed */
     #statusbtn {
         width: 70px;
         border: 2px solid #2D312C;
@@ -83,6 +83,26 @@
         <div class="col-lg-12" style="padding:0">
             <div style="margin-left:20px;margin-right:20px;margin-top:1%">
                 <!-- MODAL DIVS -->
+                <!-- Deactivate users modal -->
+                <center>
+                    <div id="restrict" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 id="headcontent" class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="paracontent"> </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="yesrestrict" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+                <!-- UPDATE MODAL -->
                 <center>
                     <div id="editModal" class="modal fade" role="dialog" style="z-index:9999;">
                         <div class="modal-dialog">
@@ -126,8 +146,8 @@
                                             <label class="control-label col-sm-2">Status:</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="estatus">
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Confirmed">Confirmed</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="confirmed">Confirmed</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -136,9 +156,9 @@
                                             <label class="control-label col-sm-2">Role:</label>
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="erole">
-                                                    <option>User</option>
-                                                    <option>Community_Builder</option>
-                                                    <option>Admin</option>
+                                                    <option value="user">User</option>
+                                                    <option value="Community_Builder">Community_Builder</option>
+                                                    <option value="admin">Admin</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -162,6 +182,7 @@
                     </div>
                 </center>
                 <center>
+                    <!-- EMAIL MODAL -->
                     <div class="modal fade" tabindex="-1" role="dialog" id="emailModal">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -183,8 +204,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label"><b>Subject: </b></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" value="(This mail is from CQ)"
-                                                    id="emailSubject">
+                                                <input type="text" class="form-control" placeholder="(This mail is from social hub)"
+                                                id="emailSubject">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -206,15 +227,19 @@
                 <div class="form-control" id="userlist-icon" style="float:left;">User list
                 </div>
                 <select class="form-control" id="rolebtn" style="float:right;margin-left:10px;width:15%">
-                    <option>All</option>
-                    <option>Admin</option>
-                    <option>User</option>
-                    <option>Community_Builder</option>
+                    <optgroup label="Role">
+                        <option>All</option>
+                        <option>Admin</option>
+                        <option>User</option>
+                        <option>Community_Builder</option>
+                    </optgroup>
                 </select>
                 <select class="form-control" id="statusbtn" style="float:right;margin-left:10px;width:10%">
-                    <option value="All">All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Confirmed">Confirmed</option>
+                    <optgroup label="Status">
+                        <option value="All">All</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                    </optgroup>
                 </select>
 
                 <button id="refresh" class="btn btn-default" style="float:right;background-color: #2D312C;color: #fff;">
@@ -275,8 +300,11 @@
                     "data": function (d) {
                         d.role = $('#rolebtn').val();
                         d.status = $('#statusbtn').val();
+                        // d.me="heyy"
+                        // console.log(d)
                     },
                 },
+                // line wise
                 "columns": [{
                     "data": "email"
                 },
@@ -296,23 +324,38 @@
                     "data": null
                 },
                 ],
-
+                // in 5th col
                 "columnDefs": [{
                     "targets": 5,
-
+                    // jitna data mngwana h acc to limit n skip ye fnc utni br chle ga
                     "render": function (data, type, row, meta) {
+                        // row (or data) mei puri row data base se aaye gi 
+                        // { role: "admin", image_name: "default.png", status: "pending", _id: "5fe3539031094245b08d7535", email: "admin@admin.com", … }
+                        // city: "sunam"
+                        // dob: "2020-12-31"
+                        // email: "admin@admin.com"
+                        // gender: "Male"
+                        // image_name: "default.png"
+                        // name: "admin saab ji"
+                        // password: "admin"
+                        // phone: "9999999999"
+                        // role: "admin"
+                        // status: "pending"
+                        // __v: 29
+                        // _id: "5fe3539031094245b08d7535"
                         var r = row.role;
-                        // console.log(row);
 
-                        if (row.emailid != "admin@gmail.com") {
+                        console.log("***",row.role);
+
+                        if (row.role !="admin") {
                             data =
+                            // mail user fuc chle ga on click // update user
                                 '<center><a class="btn btn-primary btn-sm emailbtn actionbtns" data-toggle="modal" data-target="#emailModal" onclick=mailUser("' +
                                 row._id + '","' + row.email +
-                                '") style="background:#000;margin-right:5px;"><span class="fa fa-envelope" style="color:#fff"></span></a><a                  onclick=updateUser("' +
-                                row._id + '","' + row.email + '","' + row.phone + '","' +
-                                row.city + ','+row.status+',' + row.role +
+                                '") style="background:#000;margin-right:5px;"><span class="fa fa-envelope" style="color:#fff"></span></a><a onclick=updateUser("' +
+                                row._id + '","' + row.email + '","' + row.phone + '","'+row.city + '","'+row.status+'","' + row.role +
                                 '") class="btn btn-primary btn-sm actionbtns" style="margin-right:5px;" data-toggle="modal" data-target="#editModal" ><span class="fa fa-edit"></span></a>';
-                            if (row.restrict === "1")
+                            if (row.restrict === "0")
                                 data = data +
                                     '<a class="btn btn-warning btn-sm activebtn actionbtns" data-toggle="modal" data-target="#restrict" onclick=changestate("' +
                                     row._id + '","' + row.email + '","' + row.restrict +
@@ -325,8 +368,11 @@
                             return data;
                         } else {
                             data =
-                                '<center><a class="btn btn-primary btn-sm emailbtn actionbtns" data-toggle="modal" data-target="#sendmail" style="background:#000"><span class="fa fa-envelope" style="color:#fff"></span></a><center>';
-                            return data;
+                                // '<center><a class="btn btn-primary btn-sm emailbtn actionbtns" data-toggle="modal" data-target="#sendmail" style="background:#000"><span class="fa fa-envelope" style="color:#fff"></span></a><center>';
+                                '<center><a class="btn btn-primary btn-sm emailbtn actionbtns" data-toggle="modal" data-target="#emailModal" onclick=mailUser("' +
+                                row._id + '","' + row.email +
+                                '") style="background:#000;margin-right:5px;"><span class="fa fa-envelope" style="color:#fff"></span></a></center>'
+                                return data;
                         }
                     }
                 }],
@@ -342,25 +388,29 @@
                 table.ajax.reload(null, false);
             });
         })
+
         setInterval(function () {
             if (($("#emailModal").hasClass("in")) == false) {
 
                 $("#emailSubject").val('');
                 $(".trumbowyg-editor").html('');
             }
-        }, 1000)
+        }, 2000)
 
+
+        // send mail through modal function
         function mailUser(_id, username) {
+            alert(username)
             $('#sendTo').val(username);
             $('#sendMail').click(function () {
                 var obj = {
                     _id: _id,
-                    emailid: username,
+                    email: username,
                     subject: $("#emailSubject").val(),
                     text: $("#textarea").val()
                 }
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/mail");
+                xhr.open("POST", "/admin/mail");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(obj));
                 xhr.onload = function () {
@@ -379,8 +429,10 @@
         // $("#textarea").trumbowyg();
 
         function updateUser(_id, username, phone, city, status, role) {
-            console.log(_id);
-            console.log(username);
+            // console.log(_id);
+            // console.log(status,"**");
+
+
             $('#eheading').html("Update " + username);
             $('#eusername').val(username);
             $('#ephone').val(phone);
@@ -390,45 +442,49 @@
             $('#eupdate').click(function () {
                 var obj = {
                     _id: _id,
-                    emailid: $("#eusername").val(),
-                    phoneno: $("#ephone").val(),
+                    email: $("#eusername").val(),
+                    phone: $("#ephone").val(),
                     city: $("#ecity").val(),
                     status: $("#estatus").val(),
                     role: $("#erole").val()
                 }
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/updateuserlist");
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send(JSON.stringify(obj));
-                xhr.onload = function () {
-                    if (xhr.responseText == '1')
-                        alert("User updated");
-                    window.location = "/userlist";
+                if(obj.city == "" || obj.phone == "" || obj.email == "" || obj.status == "" || obj.role == ""){
+                    alert("All feilds are mandatory")
+                }else{
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/admin/updateuserlist");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.send(JSON.stringify(obj));
+                    xhr.onload = function () {
+                        if (xhr.responseText == '1')
+                            alert("User updated");
+                        window.location = "/admin/userlist";
+                    }
                 }
             })
         }
 
         function changestate(_id, username, state) {
             var obj;
-            if (state == "1") {
+            if (state == "0") {
                 $('#headcontent').html("Deactivate User?")
                 $('#paracontent').html("Are you sure you want to Deactivate " + username)
                 obj = {
                     _id: _id,
-                    restrict: "0",
+                    restrict: "1",
                 }
             } else {
                 $('#headcontent').html("Activate User?")
                 $('#paracontent').html("Are you sure you want to Activate " + username)
                 obj = {
                     _id: _id,
-                    restrict: "1",
+                    restrict: "0",
                 }
             }
 
             $('#yesrestrict').click(function () {
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/restrict");
+                xhr.open("POST", "/admin/restrict");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(obj));
                 xhr.onload = function () {
@@ -436,7 +492,7 @@
                         alert("User Activated");
                     else
                         alert("User Deactivated");
-                    window.location = "/userlist";
+                    window.location = "/admin/userlist";
                 }
             })
         }
