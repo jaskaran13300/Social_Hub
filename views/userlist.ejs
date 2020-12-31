@@ -157,7 +157,7 @@
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="erole">
                                                     <option value="user">User</option>
-                                                    <option value="Community_Builder">Community_Builder</option>
+                                                    <option value="community_builder">Community_Builder</option>
                                                     <option value="admin">Admin</option>
                                                 </select>
                                             </div>
@@ -400,7 +400,8 @@
 
         // send mail through modal function
         function mailUser(_id, username) {
-            alert(username)
+            // alert(username)
+
             $('#sendTo').val(username);
             $('#sendMail').click(function () {
                 var obj = {
@@ -418,7 +419,6 @@
                         alert("Mail send");
                     } else {
                         alert("Mail not send");
-
                     }
                 }
 
@@ -429,10 +429,6 @@
         // $("#textarea").trumbowyg();
 
         function updateUser(_id, username, phone, city, status, role) {
-            // console.log(_id);
-            // console.log(status,"**");
-
-
             $('#eheading').html("Update " + username);
             $('#eusername').val(username);
             $('#ephone').val(phone);
@@ -448,7 +444,7 @@
                     status: $("#estatus").val(),
                     role: $("#erole").val()
                 }
-                if(obj.city == "" || obj.phone == "" || obj.email == "" || obj.status == "" || obj.role == ""){
+                if(obj.city == "" || obj.phone == "" || obj.email == "" || obj.status == "" || obj.role == null){
                     alert("All feilds are mandatory")
                 }else{
                     var xhr = new XMLHttpRequest();
@@ -458,6 +454,10 @@
                     xhr.onload = function () {
                         if (xhr.responseText == '1')
                             alert("User updated");
+                        else if (xhr.responseText == '-1')
+                            alert("Phone Number Should of 10 digits");
+                        else if(xhr.responseText=="0")
+                            alert("Failed To Update")
                         window.location = "/admin/userlist";
                     }
                 }
@@ -489,9 +489,11 @@
                 xhr.send(JSON.stringify(obj));
                 xhr.onload = function () {
                     if (xhr.responseText == '1')
-                        alert("User Activated");
+                        alert("User Dectivated");
+                    else if (xhr.responseText == '-1')
+                        alert("Failed to change state");
                     else
-                        alert("User Deactivated");
+                        alert("User Activated");
                     window.location = "/admin/userlist";
                 }
             })

@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const auth=require('../middlewares/auth');
 const admin_auth=require('../middlewares/admin_auth');
 const user = require("../models/user");
+const sendMailto=require('../nodemailer/mail')
+
 
 router.get('/',async (req,res)=>{
     res.render('adminProfile',{
@@ -12,7 +14,7 @@ router.get('/',async (req,res)=>{
 });
 
 router.get('/add',async (req,res)=>{
-    console.log("****",req.session.user);
+    // console.log("****",req.session.user);
     res.render('add',{
         "user":req.session.user
     })
@@ -72,7 +74,7 @@ router.get("/userlist",async (req, res)=>{
 
 router.post('/users', function (req, res) {
     var count;
-    console.log("****",req.body);
+    // console.log("****",req.body);
     var string = JSON.stringify('order[0][column]');// which column
     var objectValue = JSON.parse(string);
     // console.log(req.body[objectValue]);
@@ -119,7 +121,7 @@ router.post('/users', function (req, res) {
     function getdata(colname, sortorder) {
         
         user.countDocuments(function (e, count) {
-            console.log("***********",e,count);
+            // console.log("***********",e,count); // count is total number of docs
 
             var start = parseInt(req.body.start);
             var len = parseInt(req.body.length);
@@ -133,7 +135,7 @@ router.post('/users', function (req, res) {
 
 
             var findobj = {};
-            console.log(role, status,"*************");
+            // console.log(role, status,"*************");
             if (role != 'All') {
                 findobj.role = role;
             }
@@ -173,7 +175,7 @@ router.post('/users', function (req, res) {
 
             user.find(findobj).skip(start).limit(len).sort({ [colname]: sortorder })
                 .then(data => {
-                    console.log(data)
+                    // console.log("******",data,"********")
                     res.send({ "recordsTotal": count, "recordsFiltered": getcount, data })
                 })
                 .catch(err => {
@@ -187,16 +189,51 @@ router.post('/users', function (req, res) {
 
 
 router.post('/mail',async (req,res)=>{
-    res.send("1")
+    // 
+    sendMailto(req.body.email,req.body.subject,req.body.text,(data)=>{
+        if(data.error){
+            res.send("0");
+        }
+        else if(data.response){
+            res.send("1")
+        }
+        else{
+            res.send("-1")
+        }
+    })
 })
 
 
 router.post('/updateuserlist',async (req,res)=>{
-    res.send("1")
+    console.log(req.body);
+    if(req.body.phone.length!=10)
+        return res.send("-1")
+    await user.findByIdAndUpdate(req.body._id, req.body, {runValidators:true, new:true },(err,result)=>{
+        if(err){
+            console.log(err);
+            res.send("0");
+        }
+        else{
+            console.log(result);
+            res.send("1")
+        }
+    })
+    
 })
 
 router.post('/restrict', async (req, res) => {
-    res.send("0")
+    await user.findByIdAndUpdate(req.body._id, req.body, { runValidators: true, new: true }, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("-1");
+        }
+        else {
+            if(result.restrict=="1") //user deactiviate
+                res.send("1")
+            else //user activate
+            res.send("0")
+        }
+    })
 })
 
 
