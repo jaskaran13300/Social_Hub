@@ -111,6 +111,27 @@
           .then(data => {
             if (data == "1") {
               alert("User Added");
+              var objj=new Object();
+              objj.email=ob.email;
+              objj.subject=ob.name+", Welcome to Social Hub!!"
+              objj.text="You are registered to Social Hub account as "+ob.role+"<br> by "+"<%=user.name %>"+" <br>and your password is "+ob.password+" <br>Kindly change your password as soon as possible <br> Thank You!!";
+              fetch('/admin/mail', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(objj)
+              })
+                .then(response => response.json())
+                .then(data => {
+                  console.log("Registered User-> Mail Sent")
+                })
+                .catch((error)=>{
+                  console.log(error);
+                })
+            
+
+
               window.location = "/admin/add"
             }
             else if (data == "0") {
@@ -123,7 +144,7 @@
           })
           .catch(error => {
             console.log(error);
-            alert("Unable to add user kindly contact admin")
+            alert("Unable to add user kindly contact admin****")
           });
       }
     });

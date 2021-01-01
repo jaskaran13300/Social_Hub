@@ -101,13 +101,13 @@ router.post('/users', function (req, res) {
             getdata("city", -1);
     }
     else if (order == 3) {
-        if (sortOrder[0] == "asc")
+        if (sortOrder == "asc")
             getdata("status", 1);
         else
             getdata("status", -1);
     }
     else if (order[0] == 4) {
-        if (sortOrder[0] == "asc")
+        if (sortOrder == "asc")
             getdata("role", 1);
         else
             getdata("role", -1);
@@ -206,8 +206,6 @@ router.post('/mail',async (req,res)=>{
 
 router.post('/updateuserlist',async (req,res)=>{
     console.log(req.body);
-    if(req.body.phone.length!=10)
-        return res.send("-1")
     await user.findByIdAndUpdate(req.body._id, req.body, {runValidators:true, new:true },(err,result)=>{
         if(err){
             console.log(err);

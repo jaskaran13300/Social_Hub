@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 const auth = async (req, res, next) => {
-    console.log("auth cakkedd");
+    // console.log("auth cakkedd");
     if(req.session.loggedIn=="1"){
         next();
     }
