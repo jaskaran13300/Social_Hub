@@ -83,7 +83,7 @@ text-align: center;
 white-space: nowrap;
 vertical-align: baseline;
 border-radius: .25em;
-
+/* visibility: hidden; */
 }
 #sadmin
 {
@@ -140,11 +140,10 @@ box-sizing:border-box;
                 hello**
             </span> -->
         </div>
-        <div id="rightpanel" style="float:right;">
+        <div id="rightpanel " style="float:right;">
 
-            <a href = "/admin/edit" ><img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%"
+            <a href = "/edit" ><img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%"
                 id="editbtn" src="/<%=user.image_name%>"> </a>
-
 
             <span class="label label-success" id="rightadmin" style="float:right;margin-right:20px;background:#5CB85C;">
                 <%=user.role%>
@@ -158,3 +157,16 @@ box-sizing:border-box;
     </div>
 
 </nav>
+
+<script>
+    // $(document).ready(function () {
+        
+        var rightadmin=document.getElementById("rightadmin")
+        var sadmin = document.getElementById("sadmin")
+        var role = "<%= user.role %>";
+        if(role!="admin"){
+            rightadmin.style.visibility = "hidden"
+            sadmin.style.marginRight = "-50%"
+        }
+    // });
+</script>

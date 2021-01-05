@@ -37,7 +37,10 @@
     for (var i = 0; i < list.length; i++) {
         list[i].classList.remove("active");
     }
-    list[8].classList.add("active");
+    if ("<%=user.role%>" == "admin")
+        list[7].classList.add("active");
+    else if ("<%=user.role%>" == "community_builder")
+        list[4].classList.add("active");
 </script>
 
 <script>

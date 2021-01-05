@@ -5,7 +5,7 @@ router.get("/",(req,res)=>{
     res.render("adminProfile",{
         user: req.session.user
     })
-});
+}); 
 
 router.get("/communities",(req,res)=>{
     res.render();
