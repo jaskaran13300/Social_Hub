@@ -8,7 +8,6 @@ const admin_auth=async (req,res,next)=>{
         next();
     }
     else{
-        console.log(path.join(__dirname,'../public/unauthorized.html'));
         res.status(401).sendFile(path.join(__dirname,'../public/unauthorized.html'))
     }
 }
