@@ -12,6 +12,7 @@ const admin_auth = require("./middlewares/admin_auth");
 app.use(expressLayouts);
 const user = require('./models/user');
 
+
 const session = require("express-session");
 app.use(
     session({
@@ -23,6 +24,7 @@ app.use(
 
 const adminRouter = require('./routers/adminRouter');
 const loginRouter=require('./routers/loginRouter');
+const communityRouter = require('./routers/communityRouter');
 
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -38,9 +40,27 @@ app.listen(port,()=>{
     console.log(`App is running on port `+port);
 });
 
+
 app.use(bodyparser.json());
+
+const setLayout = (req, res, next) => {
+    if (req.session.loggedIn == "1") {
+        if (req.session.user.role == 'admin') {
+            app.set('layout', 'layouts/adminLayout');
+        } else if (req.session.user.role == 'community_builder') {
+            app.set('layout', 'layouts/cbLayout');
+        } else {
+            app.set('layout', 'layouts/userLayout');
+        }
+        next();
+    } else {
+        res.redirect("/");
+    }
+}
+
 app.use('/login',loginRouter);
-app.use("/admin",auth,admin_auth,adminRouter);
+app.use("/admin",setLayout,admin_auth,adminRouter);
+app.use("/community_builder",setLayout,communityRouter);
 
 app.get('/test',(req,res)=>{
     User.findOne({email:"davnish99@gmail.com"}).then(user=>{
@@ -51,6 +71,9 @@ app.get('/test',(req,res)=>{
     }).catch(err=>{console.log(err);})
 
 })
+
+
+
 
 app.get('/logout',(req,res)=>{
     req.session.loggedIn = "";

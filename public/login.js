@@ -23,6 +23,8 @@ login.addEventListener("click",function(event){
             console.log(data);
             if(data == "admin"){
                 window.location="/admin";
+            } else if (data == "community_builder"){
+                window.location="/community_builder"
             }
             else if(data == "user"){
                 window.location="/user";
