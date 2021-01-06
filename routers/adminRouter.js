@@ -8,16 +8,23 @@ const sendMailto=require('../nodemailer/mail')
 
 
 router.get('/',async (req,res)=>{
-    res.render('adminProfile',{
-        "user":req.session.user
-    });
+    console.log("Admin router************")
+    console.log(req.session.img);
+    user.findOne({email:req.session.user.email},(err,users)=>{
+        res.render('adminProfile', {
+            user: users
+        });
+
+    })
 });
 
 router.get('/add',async (req,res)=>{
-    // console.log("****",req.session.user);
-    res.render('add',{
-        "user":req.session.user
+    user.findOne({email:req.session.user.email},(err,users)=>{
+        res.render('add', {
+            "user": users
+        })
     })
+
 })
 
 router.post('/add',async (req,res)=>{
@@ -68,7 +75,10 @@ router.post('/add',async (req,res)=>{
 
 
 router.get("/userlist",async (req, res)=>{
-    res.render("userlist",{user:req.session.user});
+    user.findOne({ email:req.session.user.email},(err,users)=>{
+        res.render("userlist", { user:users });
+    })
+
 })
 
 

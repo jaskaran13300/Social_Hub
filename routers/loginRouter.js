@@ -15,6 +15,7 @@ router.post('/', (req, res) => {
             if (user.password == req.body.password) {
                 req.session.user = user
                 req.session.loggedIn = 1
+                req.session.img = user.img;
 
                 res.send(JSON.stringify(user.role));
             } else {

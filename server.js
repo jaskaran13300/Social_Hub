@@ -74,10 +74,13 @@ app.get('/logout',(req,res)=>{
 });
 
 app.get('/changepassword',auth,(req,res)=>{
-    res.render('changepass',{
-        password:req.session.user.password,
-        user:req.session.user
-    });
+    User.findOne({email:req.session.user.email},(err,users)=>{
+        res.render('changepass', {
+            password:users.password,
+            user:users
+        });
+
+    })
 })
 
 app.post('/changepassword',auth,async (req,res)=>{
@@ -97,14 +100,18 @@ app.post('/changepassword',auth,async (req,res)=>{
 });
 
 app.get('/edit',auth, async (req, res) => {
-    res.render('edit', {
-        "user": req.session.user
-    })
+    User.findOne({email:req.session.user.email},(err,users)=>{
+        res.render('edit', {
+            user: users
+        })
+    });
 })
 
 app.get('/update',auth, async (req, res) => {
-    res.render("update", {
-        "user": req.session.user
+    User.findOne({ email: req.session.user.email }, (err, users) => {
+        res.render('update', {
+            user: users
+        })
     });
 });
 
@@ -137,11 +144,11 @@ app.post("/update", upload.single('myImage'),auth, async (req, res) => {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
         if(req.session.user.role=="admin")
-            res.send("1");
+            res.redirect("/admin");
         else if(req.session.user.role=="community_builder")
-            res.send("2");
+            res.send("/community_builder");
         else {
-            res.send("0")
+            res.send("/user")
         }
     } catch (err) {
         console.log(err);

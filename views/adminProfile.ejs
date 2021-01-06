@@ -6,8 +6,7 @@
 
                 <div class="d-flex pc">
                     <div class="image-container">
-                        <img src="data:image;base64,
-                        <%=user.img.data.toString('base64')%>" style="height:150px;width:150px" id="user-profile-image"
+                        <img src="data:image;base64,<%=user.img.data.toString('base64')%>" style="height:150px;width:150px" id="user-profile-image"
                             class="img-thumbnail allSideSoft" />
                     </div>
                 </div>
@@ -84,7 +83,9 @@
 
 
                 <script>
+                    var obj = window.btoa("<%=user.img.data.toString() %>");
+                    var obj1 = window.atob(obj);
                     var img = document.getElementById('user-profile-image');
-                    img.setAttribute('src','data:image/png;base64,<%=user.img.data%>');
-                    console.log("abc<%=user.img.data.toString()%>");
+                    img.setAttribute('src','data:image/png;base64,'+obj);
+                    console.log(obj1);
                 </script>
