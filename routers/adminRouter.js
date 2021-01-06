@@ -40,29 +40,29 @@ router.post('/add',async (req,res)=>{
     
 })
 
-router.get('/edit',async(req,res)=>{
-    res.render('edit',{
-        "user":req.session.user
-    })    
-})
+// router.get('/edit',async(req,res)=>{
+//     res.render('edit',{
+//         "user":req.session.user
+//     })    
+// })
 
-router.get('/update',async (req,res)=>{
-    res.render("update",{
-        user:req.session.user
-    });
-});
+// router.get('/update',async (req,res)=>{
+//     res.render("update",{
+//         user:req.session.user
+//     });
+// });
 
-router.post("/update",async (req,res)=>{
-        try{
-            const person = await user.findOneAndUpdate({email:req.session.user.email},req.body,{new:true})
-            req.session.user=person;
-            res.send("1");
-        }catch(err){
-            console.log(err);
-            res.send("err");
-        }
+// router.post("/update",async (req,res)=>{
+//         try{
+//             const person = await user.findOneAndUpdate({email:req.session.user.email},req.body,{new:true})
+//             req.session.user=person;
+//             res.send("1");
+//         }catch(err){
+//             console.log(err);
+//             res.send("err");
+//         }
 
-})
+// })
 
 
 

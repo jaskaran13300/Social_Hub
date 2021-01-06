@@ -71,7 +71,7 @@
                                     style="width:250px;position:absolute;background:transparent;border:0" id="changephoto"
                                     name="myImage" accept="image/*" />
                             <!-- <form action="/upload" enctype="multipart/form-data" style="width:100%" method="POST"> -->
-                                <input type="submit" style="float:right;margin-top:110px" class="btn btn-primary"
+                                <input type="submit" style="float:right;margin-top:110px" class="btn btn-primary" id="update_button"
                                     value="Upload Photo" />
                             <!-- </form> -->
                         </div>
@@ -187,6 +187,14 @@
         var gender = document.getElementById("gender");
         var phoneno = document.getElementById("phoneno");
         var city = document.getElementById("city");
+        var changephoto = document.getElementById("changephoto")
+        var update_button= document.getElementById("update_button")
+        changephoto.addEventListener("click", function (event) {
+            // alert("hmm")
+        })
+        update_button.addEventListener("click", function (event) {
+            alert(changephoto.value)
+        })
         update.addEventListener("click", function (event) {
             
             var obj = new Object();
@@ -197,7 +205,7 @@
             obj.gender = gender.value;
             
 
-            fetch('/admin/update', {
+            fetch('/update', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -206,10 +214,15 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data == "1") {
+                    if (data =="1") {
                         alert("User Updated");
                         window.location = "/admin"
-                    } else {
+                    }
+                    else if(data=="2"){
+                        alert("User Updated")
+                        window.location="/community_builder"
+                    }
+                    else {
                         alert("Try After Some Time");
                     }
                 })
