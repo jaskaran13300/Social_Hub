@@ -64,19 +64,17 @@
             <div class="col-12">
                 <div class="card allSidesSoft" id="container_id">
                     <div class="card-body">
+                    <form method="post" action="/update" enctype="multipart/form-data">
                         <div class="d-flex">
-                            <img src="/<%=user.image_name%>" id="user-profile-image"
+                            <img src="/<%=user.image_name%>" id="user-profile-image" name="user-profile-image"
                                 style="width: 150px; height: 150px" class="img-thumbnail allSidesSoft" />
-                                <input type="file" class="btn btn-default btn-sm"
-                                    style="width:250px;position:absolute;background:transparent;border:0" id="changephoto"
+                                
+                                <input type="file" onchange="preview_image(event)" class="btn btn-default btn-sm"
+                                    style="width:250px;position:absolute;background:transparent;border:0" id="myImage"
                                     name="myImage" accept="image/*" />
-                            <!-- <form action="/upload" enctype="multipart/form-data" style="width:100%" method="POST"> -->
-                                <input type="submit" style="float:right;margin-top:110px" class="btn btn-primary" id="update_button"
-                                    value="Upload Photo" />
-                            <!-- </form> -->
+                                
                         </div>
                         <br /><br>
-                        <form>
                             <div class="panel-group">
                                 <!--Form panel-->
                                 
@@ -164,7 +162,7 @@
 
                                     <a id="cancel" class="btn btn-danger pull-right btnEditForm"
                                         style="margin:1px">Cancel</a>
-                                    <input id="update" type="button" class="btn btn-primary pull-right btnEditForm"
+                                    <input id="update" type="submit" class="btn btn-primary pull-right btnEditForm"
                                         style="margin:1px" value="Update" />
                                 </div>
 
@@ -180,56 +178,67 @@
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type='text/javascript'>
+    function preview_image(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('user-profile-image');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
 <script>
-     var update = document.getElementById("update");
-        var username = document.getElementById("username");
-        var dob = document.getElementById("dob");
-        var gender = document.getElementById("gender");
-        var phoneno = document.getElementById("phoneno");
-        var city = document.getElementById("city");
-        var changephoto = document.getElementById("changephoto")
-        var update_button= document.getElementById("update_button")
-        changephoto.addEventListener("click", function (event) {
-            // alert("hmm")
-        })
-        update_button.addEventListener("click", function (event) {
-            alert(changephoto.value)
-        })
-        update.addEventListener("click", function (event) {
+
+
+    //  var update = document.getElementById("update");
+    //     var username = document.getElementById("username");
+    //     var dob = document.getElementById("dob");
+    //     var gender = document.getElementById("gender");
+    //     var phoneno = document.getElementById("phoneno");
+    //     var city = document.getElementById("city");
+    //     var changephoto = document.getElementById("changephoto")
+    //     var update_button= document.getElementById("update_button")
+    //     update_button.addEventListener("click", function (event) {
+    //         alert(changephoto.value)
+    //     })
+    //     // update.addEventListener("click", function (event) {
             
-            var obj = new Object();
-            obj.city = city.value;
-            obj.name = username.value;
-            obj.dob = dob.value;
-            obj.phone = phoneno.value;
-            obj.gender = gender.value;
+        //     var obj = new Object();
+        //     obj.city = city.value;
+        //     obj.name = username.value;
+        //     obj.dob = dob.value;
+        //     obj.phone = phoneno.value;
+        //     obj.gender = gender.value;
             
 
-            fetch('/update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data =="1") {
-                        alert("User Updated");
-                        window.location = "/admin"
-                    }
-                    else if(data=="2"){
-                        alert("User Updated")
-                        window.location="/community_builder"
-                    }
-                    else {
-                        alert("Try After Some Time");
-                    }
-                })
-                .catch(error => {
-                    alert("Unable to add user kindly contact admin")
-                });
-        });
+        //     fetch('/update', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(obj)
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data =="1") {
+        //                 alert("User Updated");
+        //                 window.location = "/admin"
+        //             }
+        //             else if(data=="2"){
+        //                 alert("User Updated")
+        //                 window.location="/community_builder"
+        //             }
+        //             else {
+        //                 alert("Try After Some Time");
+        //             }
+        //         })
+        //         .catch(error => {
+        //             alert("Unable to add user kindly contact admin")
+        //         });
+        // });
 
 
 </script>

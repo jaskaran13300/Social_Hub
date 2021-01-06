@@ -6,7 +6,8 @@
 
                 <div class="d-flex pc">
                     <div class="image-container">
-                        <img src="/<%=user.image_name%>" style="height:150px;width:150px" id="user-profile-image"
+                        <img src="data:image;base64,
+                        <%=user.img.data.toString('base64')%>" style="height:150px;width:150px" id="user-profile-image"
                             class="img-thumbnail allSideSoft" />
                     </div>
                 </div>
@@ -80,3 +81,10 @@
                         </div>
                     </div>
                 </div>
+
+
+                <script>
+                    var img = document.getElementById('user-profile-image');
+                    img.setAttribute('src','data:image/png;base64,<%=user.img.data%>');
+                    console.log("abc<%=user.img.data.toString()%>");
+                </script>

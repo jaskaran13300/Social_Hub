@@ -65,6 +65,9 @@ var userSchema = new mongoose.Schema({
             type:Boolean,
             default:true
         },
+        img:{
+            data:Buffer
+        },
         
     },
     {

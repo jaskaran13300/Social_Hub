@@ -11,7 +11,7 @@ const auth = require("./middlewares/auth")
 const admin_auth = require("./middlewares/admin_auth");
 app.use(expressLayouts);
 const user = require('./models/user');
-
+const multer = require('multer');
 
 const session = require("express-session");
 app.use(
@@ -108,9 +108,33 @@ app.get('/update',auth, async (req, res) => {
     });
 });
 
-app.post("/update",auth, async (req, res) => {
+
+
+const upload = multer({
+    // dest: 'avatars',
+    limit: {
+        fileSize: 10000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
+            return cb(new Error('File Should be an image'));
+        }
+        cb(undefined, true);
+    }
+})
+
+
+app.post("/update", upload.single('myImage'),auth, async (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+    const obj={
+        body:req.body,
+        img:{
+            data:req.file.buffer
+        }
+    }
     try {
-        const person = await user.findOneAndUpdate({ email: req.session.user.email }, req.body, { new: true })
+        const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
         if(req.session.user.role=="admin")
             res.send("1");
