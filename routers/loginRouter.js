@@ -3,10 +3,6 @@ const router=express.Router();
 const mongoose=require("mongoose");
 const user=require("../models/user")
 
-// router.get('/',(req,res)=>{
-//     req.session.loggedIn=0;
-//     res.redirect('index.html')
-// })
 
 router.post('/', (req, res) => {
     console.log(req.body.email);
@@ -15,6 +11,7 @@ router.post('/', (req, res) => {
             if (user.password == req.body.password) {
                 req.session.user = user
                 req.session.loggedIn = 1
+                req.session.img = user.img;
 
                 res.send(JSON.stringify(user.role));
             } else {

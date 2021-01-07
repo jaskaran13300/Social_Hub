@@ -17,8 +17,6 @@ html
 }
 #viewscreen
 {
-   /*height: 100vh !important;
-  display: flex;*/
   padding-left: 0px;
   overflow: hidden;
 }
@@ -29,13 +27,6 @@ html
 }
 #sidebar{
 
-    /*width:50px;
-    background-color:black;
-    height:100%;
-    left:0;
-    float : left;
-    overflow-x: hidden;
-    transition: 0.5s;*/
     z-index: 1000;
     position: fixed;
     left: 250px;
@@ -54,7 +45,6 @@ html
 
 #rightview
 {
-    /*position: absolute;*/
     width: 100%;
     overflow-x: hidden;
     transition: 0.5s;
@@ -92,10 +82,6 @@ html
 {
     display: block;
 }
-/*#bars
-{
-    display: none;
-}*/
 #mobile-img
 {
     height: 60px;
@@ -131,12 +117,6 @@ li a:hover{
     {
         padding-left: 0;
     }
-    /*#rightview
-    {
-        position: relative;
-        width:100%;
-        overflow-x: hidden;
-    }*/
 
     #rightview.set-rightview
     {

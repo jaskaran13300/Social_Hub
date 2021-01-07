@@ -12,4 +12,3 @@ mongoose.connect('mongodb://localhost:27017/SocialHub',{
     console.log("Error in DB connection : " + err);
   }
 });
-// require("../models/user.model");
