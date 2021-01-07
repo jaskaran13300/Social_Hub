@@ -145,7 +145,7 @@ box-sizing:border-box;
             <a href = "/edit" >
                 <% if(user.img.data){ %>
                     <img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%" id="editbtn"
-                        src="data:image;base64,<%=user.img.data.toString('base64')%>"> </a>
+                        src="data:image;base64,<%=img%>"> </a>
                 <% } else { %>
                     <img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%" id="editbtn"
                                 src="/<%= user.image_name%>"> </a>

@@ -1,8 +1,5 @@
 const express = require("express");
 var router = express.Router();
-const mongoose = require("mongoose");
-const auth=require('../middlewares/auth');
-const admin_auth=require('../middlewares/admin_auth');
 const user = require("../models/user");
 const sendMailto=require('../nodemailer/mail')
 
@@ -10,21 +7,21 @@ const sendMailto=require('../nodemailer/mail')
 router.get('/',async (req,res)=>{
     console.log("Admin router************")
     console.log(req.session.img);
-    user.findOne({email:req.session.user.email},(err,users)=>{
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
         res.render('adminProfile', {
-            user: users
+            user: req.session.user,
+            img:thumb
         });
 
-    })
 });
 
 router.get('/add',async (req,res)=>{
-    user.findOne({email:req.session.user.email},(err,users)=>{
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
         res.render('add', {
-            "user": users
+            user: req.session.user,
+            img:thumb
         })
-    })
-
+  
 })
 
 router.post('/add',async (req,res)=>{
@@ -47,47 +44,20 @@ router.post('/add',async (req,res)=>{
     
 })
 
-// router.get('/edit',async(req,res)=>{
-//     res.render('edit',{
-//         "user":req.session.user
-//     })    
-// })
-
-// router.get('/update',async (req,res)=>{
-//     res.render("update",{
-//         user:req.session.user
-//     });
-// });
-
-// router.post("/update",async (req,res)=>{
-//         try{
-//             const person = await user.findOneAndUpdate({email:req.session.user.email},req.body,{new:true})
-//             req.session.user=person;
-//             res.send("1");
-//         }catch(err){
-//             console.log(err);
-//             res.send("err");
-//         }
-
-// })
-
 
 
 
 router.get("/userlist",async (req, res)=>{
-    user.findOne({ email:req.session.user.email},(err,users)=>{
-        res.render("userlist", { user:users });
-    })
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    res.render("userlist", { user:req.session.user,img:thumb });
 
 })
 
 
 router.post('/users', function (req, res) {
     var count;
-    // console.log("****",req.body);
     var string = JSON.stringify('order[0][column]');// which column
     var objectValue = JSON.parse(string);
-    // console.log(req.body[objectValue]);
     var order=req.body[objectValue];// column number
     string = JSON.stringify('order[0][dir]');// asc or desc
     objectValue = JSON.parse(string);

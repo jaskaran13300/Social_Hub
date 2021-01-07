@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User | Social Hub</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <!-- <link href="menu.css" rel="stylesheet" type="text/css">
-    <link href="sidebar.css" rel="stylesheet" type="text/css"> -->
-
-    <!-- BOOTSTRAP 3-->
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
@@ -89,17 +86,7 @@
         <div id="viewscreen">
             <%- include('../partials/adminsidebar.html'); %>
                 <div id="rightview">
-                    <!--
-            <div class="container" id="profiledata" style="margin-top:50px;width:70%;background-color:white;box-shadow:0px 0px 10px grey;padding:10px;box-sizing:border-box;float:left;margin-left:140px;" >
-                <div class="container-fluid" style="width:100%;height:130px;"><i style="font-size:100px;color:grey;float:left;" class="fa fa-user" aria-hidden="true"></i></div>
-                
-                
-                
-              
-                
-                
-            </div>
--->
+                 
                     <center>
                         <div id="delModal" class="modal fade" role="dialog">
                             <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
@@ -131,37 +118,11 @@
         var element = document.getElementById("rightview");
         element.classList.toggle("set-rightview");
     }
-    //var add = document.getElementById("add");
-    // add.addEventListener("click", function (event) {
-    //     window.location = "/admin/add";
-    // });
-    // var editbtn = document.getElementById("editbtn");
-    // editbtn.addEventListener("click", function (event) {
-    //     window.location = "/admin/edit";
-    // });
-    // var createtag = document.getElementById("tagpanel");
-    // createtag.addEventListener("click", function (event) {
-    //     window.location = "/createtag";
-    // });
-    // var changepass = document.getElementById("change");
-    // changepass.addEventListener("click", function (event) {
-    //     window.location = "/changepass";
-    // // });
-    // var userlt = document.getElementById("userslist");
-    // userlt.onclick = function () {
-    //     window.location = "/userlist";
-    // }
+    
     var switch1 = document.getElementById("switch");
     switch1.setAttribute("data-toggle", "modal");
     switch1.setAttribute("data-target", "#delModal");
-    // var ya = document.getElementById("ya");
-    // ya.onclick = function () {
-    //     window.location = "/admincommunities";
-    // }
-    // var community = document.getElementById("community");
-    // community.onclick = function () {
-    //     window.location = "/communities";
-    // }
+    
     var logout = document.getElementById("logout");
     logout.setAttribute("data-toggle", "modal");
     logout.setAttribute("data-target", "#delModal1");

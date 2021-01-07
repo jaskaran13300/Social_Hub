@@ -3,10 +3,6 @@ const router=express.Router();
 const mongoose=require("mongoose");
 const user=require("../models/user")
 
-// router.get('/',(req,res)=>{
-//     req.session.loggedIn=0;
-//     res.redirect('index.html')
-// })
 
 router.post('/', (req, res) => {
     console.log(req.body.email);

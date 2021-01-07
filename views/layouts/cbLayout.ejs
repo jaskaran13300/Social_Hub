@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Community Builder | Social Hub</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <!-- <link href="menu.css" rel="stylesheet" type="text/css">
-    <link href="sidebar.css" rel="stylesheet" type="text/css"> -->
-
-    <!-- BOOTSTRAP 3-->
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
@@ -51,12 +48,6 @@
                 width: 100% !important;
             }
 
-            /*
-    .div-min-width
-    {
-        width:360px;
-    }
-*/
             #cont {
                 padding: 0;
                 margin: 0;
@@ -96,24 +87,7 @@
             <%- include('../partials/cbSidebar.html'); %>
                 <div id="rightview">
                   
-                    <!-- <center>
-                        <div id="delModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog modal-sm" style="position:relative;top:35%!important;">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Switch As User</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Do you really want switch state... </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="ya" type="button" class="btn btn-success">Yes</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </center> -->
+
                     <%- body %>
                 </div>
 </body>
@@ -127,37 +101,6 @@
         var element = document.getElementById("rightview");
         element.classList.toggle("set-rightview");
     }
-    //var add = document.getElementById("add");
-    // add.addEventListener("click", function (event) {
-    //     window.location = "/admin/add";
-    // });
-    // var editbtn = document.getElementById("editbtn");
-    // editbtn.addEventListener("click", function (event) {
-    //     window.location = "/admin/edit";
-    // });
-    // var createtag = document.getElementById("tagpanel");
-    // createtag.addEventListener("click", function (event) {
-    //     window.location = "/createtag";
-    // });
-    // var changepass = document.getElementById("change");
-    // changepass.addEventListener("click", function (event) {
-    //     window.location = "/changepass";
-    // // });
-    // var userlt = document.getElementById("userslist");
-    // userlt.onclick = function () {
-    //     window.location = "/userlist";
-    // }
-    // var switch1 = document.getElementById("switch");
-    // switch1.setAttribute("data-toggle", "modal");
-    // switch1.setAttribute("data-target", "#delModal");
-    // var ya = document.getElementById("ya");
-    // ya.onclick = function () {
-    //     window.location = "/admincommunities";
-    // }
-    // var community = document.getElementById("community");
-    // community.onclick = function () {
-    //     window.location = "/communities";
-    // }
     var logout = document.getElementById("logout");
     logout.setAttribute("data-toggle", "modal");
     logout.setAttribute("data-target", "#delModal1");

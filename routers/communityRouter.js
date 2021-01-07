@@ -3,19 +3,17 @@ const User = require("../models/user");
 var router = express.Router();
 
 router.get("/",(req,res)=>{
-    User.findById(req.session.user._id).then((users)=>{
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
         res.render("adminProfile", {
-            user: users
+            user: req.session.user,
+            img:thumb
         })
-
-    }).catch(err=>{
-        throw err;
-    })
 
 }); 
 
 router.get("/communities",(req,res)=>{
-    res.render();
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    res.render("test",{user: req.session.user,img:thumb})
 });
 
 module.exports = router;

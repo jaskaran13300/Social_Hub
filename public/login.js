@@ -39,7 +39,6 @@ login.addEventListener("click",function(event){
         })
         .catch(error=>{
             console.log(error);
-            // alert(error)
         });
     }
 });

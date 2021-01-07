@@ -1,4 +1,5 @@
 require("./db/db");
+var fs = require("fs");
 var express=require('express')
 var path = require('path')
 var bodyparser = require('body-parser')
@@ -18,7 +19,10 @@ app.use(
     session({
         secret: "jwt",
         resave: false,
-        saveUninitialized: true
+        saveUninitialized: true,
+        cookie: {
+            expires: 3600000
+        }
     })
 );
 
@@ -85,23 +89,18 @@ app.get('/logout',(req,res)=>{
     res.redirect("/");
 });
 
-app.get('/changepassword',auth,(req,res)=>{
-    User.findOne({email:req.session.user.email},(err,users)=>{
+app.get('/changepassword',setLayout,(req,res)=>{
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
         res.render('changepass', {
-            password:users.password,
-            user:users
+            password:req.session.user.password,
+            user:req.session.user,
+            img:thumb
         });
 
-    })
 })
 
-app.post('/changepassword',auth,async (req,res)=>{
-    var newvalues = {
-        $set: {
-         password: req.body.password
-        }
-    };
-    // console.log(req.body);
+app.post('/changepassword',setLayout,async (req,res)=>{
+    
     try{
         const user = await User.findOneAndUpdate({email:req.session.user.email},req.body,{new:true});
         req.session.user = user;
@@ -111,26 +110,24 @@ app.post('/changepassword',auth,async (req,res)=>{
     }
 });
 
-app.get('/edit',auth, async (req, res) => {
-    User.findOne({email:req.session.user.email},(err,users)=>{
+app.get('/edit',setLayout, async (req, res) => {
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
         res.render('edit', {
-            user: users
+            user: req.session.user,
+            img:thumb
         })
-    });
 })
 
-app.get('/update',auth, async (req, res) => {
-    User.findOne({ email: req.session.user.email }, (err, users) => {
+app.get('/update',setLayout, async (req, res) => {
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+
         res.render('update', {
-            user: users
-        })
-    });
+            user: req.session.user,img:thumb
+        });
 });
 
 
-
 const upload = multer({
-    // dest: 'avatars',
     limit: {
         fileSize: 10000000
     },
@@ -143,22 +140,52 @@ const upload = multer({
 })
 
 
-app.post("/update", upload.single('myImage'),auth, async (req, res) => {
+app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
     console.log(req.body);
     console.log(req.file);
-    const obj={
-        body:req.body,
-        img:{
-            data:req.file.buffer
+    var obj;
+    if(req.file){
+        obj={
+            body:req.body,
+            img:{
+                data:req.file.buffer
+            }
+        }
+    }else{
+        obj={
+            body:req.body
         }
     }
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
+        
         res.redirect("/");
     } catch (err) {
         console.log(err);
-        res.send("err");
+        var thumb = new Buffer(req.session.user.img.data).toString('base64');
+        res.render("test",{
+            user: req.session.user,
+            img:thumb
+        });
     }
 
 })
+
+app.get("/test",(req, res) => {
+
+
+
+    User.findOne({email:req.session.user.email},(err,users)=>{
+        console.log(users);
+    })
+
+    console.log(req.session.user.img.data);
+    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+
+    res.render("test",{ 
+        user:req.session.user,
+        img:thumb
+    });
+
+});
