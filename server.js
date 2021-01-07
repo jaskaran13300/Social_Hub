@@ -141,25 +141,20 @@ const upload = multer({
 
 
 app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
-    console.log(req.body);
-    console.log(req.file);
+
     var obj = new Object();
-    if(req.file){
-        obj={
-            body:req.body,
-            img:{
-                data:req.file.buffer
-            }
+    obj=req.body
+    obj.name = req.body.fullname
+    if(req.file){  
+        obj.img = {
+            data: req.file.buffer
         }
-    }else{
-        obj.name = req.body.name;
-        
     }
-    console.log(obj);
+    delete obj.fullname
+    console.log("********************************",obj);
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
-        
         res.redirect("/");
     } catch (err) {
         console.log(err);
