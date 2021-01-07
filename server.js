@@ -143,7 +143,7 @@ const upload = multer({
 app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
     console.log(req.body);
     console.log(req.file);
-    var obj;
+    var obj = new Object();
     if(req.file){
         obj={
             body:req.body,
@@ -152,10 +152,10 @@ app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
             }
         }
     }else{
-        obj={
-            body:req.body
-        }
+        obj.name = req.body.name;
+        
     }
+    console.log(obj);
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
