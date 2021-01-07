@@ -66,8 +66,13 @@
                     <div class="card-body">
                     <form method="post" action="/update" enctype="multipart/form-data">
                         <div class="d-flex">
-                            <img src="data:image;base64,<%=user.img.data.toString('base64')%>" id="user-profile-image" name="user-profile-image"
-                                style="width: 150px; height: 150px" class="img-thumbnail allSidesSoft" />
+                            <% if(user.img.data){ %>
+                                <img src="data:image;base64,<%=user.img.data.toString('base64')%>" style="height:150px;width:150px"
+                                    id="user-profile-image" class="img-thumbnail allSideSoft" />
+                                <% } else { %>
+                                    <img src="/<%= user.image_name%>" style="height:150px;width:150px" id="user-profile-image"
+                                        class="img-thumbnail allSideSoft" />
+                                    <% } %>
                                 
                                 <input type="file" onchange="preview_image(event)" class="btn btn-default btn-sm"
                                     style="width:250px;position:absolute;background:transparent;border:0" id="myImage"

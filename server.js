@@ -34,7 +34,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/adminLayout');
 
-
+app.get('/',(req, res) =>{
+    if(req.session.loggedIn == "1"){
+        if(req.session.user.role=="admin"){
+            res.redirect("/admin");
+        }else if(req.session.user.role=="community_builder"){
+            res.redirect("/community_builder");
+        }else{
+            res.redirect("/user");
+        }
+    }else{
+        res.sendFile(path.join(__dirname, '/public/login.html'));
+    }
+});
 
 app.listen(port,()=>{
     console.log(`App is running on port `+port);
@@ -143,13 +155,7 @@ app.post("/update", upload.single('myImage'),auth, async (req, res) => {
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
-        if(req.session.user.role=="admin")
-            res.redirect("/admin");
-        else if(req.session.user.role=="community_builder")
-            res.send("/community_builder");
-        else {
-            res.send("/user")
-        }
+        res.redirect("/");
     } catch (err) {
         console.log(err);
         res.send("err");
