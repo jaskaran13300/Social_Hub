@@ -1,7 +1,7 @@
 const express = require("express");
 var router = express.Router();
 const user = require("../models/user");
-const sendMailto=require('../nodemailer/mail')
+const sendMailto=require('../controllers/mail')
 
 
 router.get('/',async (req,res)=>{

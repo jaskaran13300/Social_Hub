@@ -11,8 +11,10 @@ const User = require('./models/user')
 const auth = require("./middlewares/auth")
 const admin_auth = require("./middlewares/admin_auth");
 app.use(expressLayouts);
+
+const upload = require("./controllers/multer")
 const user = require('./models/user');
-const multer = require('multer');
+const community = require("./models/community");
 
 const session = require("express-session");
 app.use(
@@ -127,17 +129,6 @@ app.get('/update',setLayout, async (req, res) => {
 });
 
 
-const upload = multer({
-    limit: {
-        fileSize: 10000000
-    },
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpeg|jpg)$/)) {
-            return cb(new Error('File Should be an image'));
-        }
-        cb(undefined, true);
-    }
-})
 
 
 app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
@@ -168,13 +159,6 @@ app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
 
 app.get("/test",(req, res) => {
 
-
-
-    User.findOne({email:req.session.user.email},(err,users)=>{
-        console.log(users);
-    })
-
-    console.log(req.session.user.img.data);
     var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
 
     res.render("test",{ 
@@ -183,3 +167,15 @@ app.get("/test",(req, res) => {
     });
 
 });
+
+app.post("/test",upload.single('profilePic'),async (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+
+});
+
+app.get("/community/list",setLayout,async (req, res) => {
+    community.find({},(err,communities)=>{
+        console.log(communities);
+    });
+})
