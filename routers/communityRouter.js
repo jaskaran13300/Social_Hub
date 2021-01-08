@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
 const upload = require("../controllers/multer")
+const community=require("../models/community")
 router.get("/",async (req,res)=>{
     var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render("adminProfile", {
@@ -38,7 +39,7 @@ router.post('/addComm',upload.single('profilePic'),async (req,res)=>{
         const commu = await comm.save();
         console.log(commu);
         var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
-        res.render("test", {
+        res.render("AddCommunity", {
             user: req.session.user,
             img: thumb
         });

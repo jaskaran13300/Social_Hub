@@ -175,7 +175,32 @@ app.post("/test",upload.single('profilePic'),async (req, res) => {
 });
 
 app.get("/community/list",setLayout,async (req, res) => {
-    community.find({},(err,communities)=>{
-        console.log(communities);
-    });
+    try{
+            var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
+            res.render('CommunityList', {
+                user: req.session.user,
+                img: thumb,
+            })
+    }catch(error){ 
+        console.log(error);
+    }
+    
+})
+app.post("/getComm", setLayout, async (req,res)=>{
+    var search = req.body.search_value;
+    var limit = req.body.limit;
+    var skip = req.body.skip;
+    var searchRegex = { name: new RegExp('^' + search+'.*$', "i")}
+    console.log(searchRegex);
+    // $and: [searchRegex]
+    community.find({ $and: [searchRegex]}).skip(skip).limit(limit).exec(function(err,data){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(data.length);
+            res.send(data)
+        }
+    })
+
 })
