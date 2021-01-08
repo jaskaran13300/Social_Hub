@@ -172,6 +172,28 @@ app.post("/test",upload.single('profilePic'),async (req, res) => {
     console.log(req.body);
     console.log(req.file);
 
+    var comm = new community();
+    comm.name = req.body.name;
+    comm.description = req.body.trumbowyg;
+    comm.method = req.body.method;
+    comm.owner.email = req.session.user.email;
+    comm.owner.name = req.session.user.name;
+    comm.owner.id = req.session.user._id;
+    if (req.file)
+        comm.img.base64 = new Buffer.from(req.file.buffer).toString('base64')
+
+    try {
+        const commu = await comm.save();
+        console.log(commu);
+        var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
+        res.render("AddCommunity", {
+            user: req.session.user,
+            img: thumb
+        });
+    } catch (err) {
+        console.log(err);
+    }
+
 });
 
 app.get("/community/list",setLayout,async (req, res) => {
