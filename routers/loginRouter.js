@@ -12,7 +12,6 @@ router.post('/', (req, res) => {
                 req.session.user = user
                 req.session.loggedIn = 1
                 req.session.img = user.img;
-
                 res.send(JSON.stringify(user.role));
             } else {
                 res.send(JSON.stringify("incorrect"));
@@ -20,7 +19,7 @@ router.post('/', (req, res) => {
         } else {
             res.send(JSON.stringify("not found"));
         }
-        console.log(user);
+        // console.log(user);
         
     }).catch(err => {
         res.send(JSON.stringify("err"));

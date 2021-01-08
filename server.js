@@ -90,7 +90,7 @@ app.get('/logout',(req,res)=>{
 });
 
 app.get('/changepassword',setLayout,(req,res)=>{
-    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('changepass', {
             password:req.session.user.password,
             user:req.session.user,
@@ -111,7 +111,7 @@ app.post('/changepassword',setLayout,async (req,res)=>{
 });
 
 app.get('/edit',setLayout, async (req, res) => {
-    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('edit', {
             user: req.session.user,
             img:thumb
@@ -119,7 +119,7 @@ app.get('/edit',setLayout, async (req, res) => {
 })
 
 app.get('/update',setLayout, async (req, res) => {
-    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
 
         res.render('update', {
             user: req.session.user,img:thumb
@@ -151,14 +151,13 @@ app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
         }
     }
     delete obj.fullname
-    console.log("********************************",obj);
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })
         req.session.user = person;
         res.redirect("/");
     } catch (err) {
         console.log(err);
-        var thumb = new Buffer(req.session.user.img.data).toString('base64');
+        var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render("test",{
             user: req.session.user,
             img:thumb
@@ -176,7 +175,7 @@ app.get("/test",(req, res) => {
     })
 
     console.log(req.session.user.img.data);
-    var thumb = new Buffer(req.session.user.img.data).toString('base64');
+    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
 
     res.render("test",{ 
         user:req.session.user,
