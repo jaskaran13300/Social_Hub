@@ -25,6 +25,19 @@ var communitySchema = new mongoose.Schema({
     description:{
         type:String
     },
+    members:[
+        {
+            user_email:{
+                type:String
+            },
+            user:{
+                type:String
+            },
+            name:{
+                type:String
+            }
+        }
+    ],
     owner:{
         id:{
             type:String

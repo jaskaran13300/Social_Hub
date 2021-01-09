@@ -118,6 +118,8 @@
 
 		function djoin(elem) {
 			var name = elem.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('a')[0].id;
+			console.log(name);
+			alert(name)
 			var xhttp = new XMLHttpRequest();
 			xhttp.open('PUT', '/directJoin');
 			xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -167,14 +169,14 @@
 						x += '<img src="data:image;base64,'+ data[i].img.base64 +
 							'" style="height:70px;width:70px;border: 3px solid rgb(235,235,235);box-shadow: 0 0 10px rgba(0,0,0,0.6);">';
 						x += '</div><div class="col-xs-6 col-sm-8" style="padding:15px;">';
-						x += '<a id="' + data[i]._id + '" class="linkToCom" href="/community/communityprofile/' + data[i]
-							._id + '" style="display:inline-block;padding-top:12px;;font-size:17px;font-weight:600;">' +
+						x += '<a id="' + data[i]._id + '" class="linkToCom" href="/community/communityprofile/' + data[i]._id + '" style="display:inline-block;padding-top:12px;;font-size:17px;font-weight:600;">' +
 							data[i].name + '</a></div>';
 						x += '<div class="col-xs-6 col-sm-2" style="padding:15px">';
-						if (data[i].membershipRule == "Direct")
+						if (data[i].method == "direct"){
+						// console.log("here");
 							x +=
 							'<button class="btn btn-primary" style="float:right;" onclick="djoin(this)">Join</button>';
-						else
+						}else
 							x +=
 							'<button class="btn btn-primary" style="float:right;" onclick="ajoin(this)">Ask To Join</button>';
 						x += '</div></div><div style="width:100%;padding:10px 0px 10px 15px;display:inline-block;">';

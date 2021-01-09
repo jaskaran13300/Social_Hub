@@ -168,10 +168,10 @@ app.get("/test",(req, res) => {
 
 });
 
-app.post("/test",upload.single('profilePic'),async (req, res) => {
-    console.log(req.body);
-    console.log(req.file);
-
+app.post("/addComm",upload.single('profilePic'),async (req, res) => {
+    // console.log(req.body);
+    // console.log(req.file);
+    // console.log(req.session.user);
     var comm = new community();
     comm.name = req.body.name;
     comm.description = req.body.trumbowyg;
@@ -215,7 +215,7 @@ app.post("/getComm", setLayout, async (req,res)=>{
     var searchRegex = { name: new RegExp('^' + search+'.*$', "i")}
     console.log(searchRegex);
     // $and: [searchRegex]
-    community.find({ $and: [searchRegex]}).skip(skip).limit(limit).exec(function(err,data){
+    community.find({ $and: [searchRegex,{'owner.email':{$ne:req.session.user.email}},{'members.user_email':{$ne:req.session.email}}]}).skip(skip).limit(limit).exec(function(err,data){
         if(err){
             console.log(err);
         }
