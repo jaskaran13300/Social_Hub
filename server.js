@@ -92,11 +92,9 @@ app.get('/logout',(req,res)=>{
 });
 
 app.get('/changepassword',setLayout,(req,res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('changepass', {
             password:req.session.user.password,
-            user:req.session.user,
-            img:thumb
+            user:req.session.user
         });
 
 })
@@ -113,18 +111,15 @@ app.post('/changepassword',setLayout,async (req,res)=>{
 });
 
 app.get('/edit',setLayout, async (req, res) => {
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('edit', {
-            user: req.session.user,
-            img:thumb
+            user: req.session.user
         })
 })
 
 app.get('/update',setLayout, async (req, res) => {
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
 
         res.render('update', {
-            user: req.session.user,img:thumb
+            user: req.session.user
         });
 });
 
@@ -136,11 +131,11 @@ app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
     var obj = new Object();
     obj=req.body
     obj.name = req.body.fullname
-    if(req.file){  
-        obj.img = {
-            data: req.file.buffer
-        }
+
+    if(req.file){
+        obj.path = req.session.user._id + ".jpg";  
     }
+    console.log(obj);
     delete obj.fullname
     try {
         const person = await user.findOneAndUpdate({ email: req.session.user.email }, obj , { new: true })

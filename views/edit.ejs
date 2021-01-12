@@ -6,13 +6,9 @@
 
                 <div class="d-flex pc">
                     <div class="image-container">
-                        <% if(user.img.data){ %>
-                            <img src="data:image;base64,<%=img%>" style="height:150px;width:150px"
+                        <img src="/uploads/<%=user.path%>" style="height:150px;width:150px"
                                 id="user-profile-image" class="img-thumbnail allSideSoft" />
-                            <% } else { %>
-                                <img src="/<%= user.image_name%>" style="height:150px;width:150px" id="user-profile-image"
-                                    class="img-thumbnail allSideSoft" />
-                                <% } %>
+                            
                     </div>
                 </div>
 

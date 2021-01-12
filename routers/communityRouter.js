@@ -4,23 +4,19 @@ const router = express.Router();
 const upload = require("../controllers/multer")
 const community=require("../models/community")
 router.get("/",async (req,res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render("adminProfile", {
             user: req.session.user,
-            img:thumb
         })
 
 }); 
 
 
 router.get("/communities",async (req,res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
-    res.render("communityPanel",{user: req.session.user,img:thumb})
+    res.render("communityPanel",{user: req.session.user})
 });
 
 router.get("/AddCommunity",(req,res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
-    res.render("AddCommunity",{user: req.session.user,img:thumb})
+    res.render("AddCommunity",{user: req.session.user})
 });
 router.post('/addComm',upload.single('profilePic'),async (req,res)=>{
     // console.log(req.body);
@@ -33,15 +29,13 @@ router.post('/addComm',upload.single('profilePic'),async (req,res)=>{
     comm.owner.name = req.session.user.name;
     comm.owner.id = req.session.user._id;
     if (req.file)
-        comm.img.data = req.file.buffer;
+        comm.img_path = req.body.name+".jpg";
 
     try {
         const commu = await comm.save();
         console.log(commu);
-        var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render("AddCommunity", {
-            user: req.session.user,
-            img: thumb
+            user: req.session.user
         });
     } catch (err) {
         console.log(err);

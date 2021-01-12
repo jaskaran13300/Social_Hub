@@ -7,19 +7,15 @@ const sendMailto=require('../controllers/mail')
 router.get('/',async (req,res)=>{
     // console.log("Admin router************")
     // console.log(req.session.img);
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('adminProfile', {
-            user: req.session.user,
-            img:thumb
+            user: req.session.user
         });
 
 });
 
 router.get('/add',async (req,res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render('add', {
-            user: req.session.user,
-            img:thumb
+            user: req.session.user
         })
   
 })
@@ -48,9 +44,7 @@ router.post('/add',async (req,res)=>{
 
 
 router.get("/userlist",async (req, res)=>{
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
-    res.render("userlist", { user:req.session.user,img:thumb });
-
+    res.render("userlist", { user:req.session.user});
 })
 
 

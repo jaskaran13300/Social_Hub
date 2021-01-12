@@ -143,13 +143,8 @@ box-sizing:border-box;
         <div id="rightpanel " style="float:right;">
 
             <a href = "/edit" >
-                <% if(user.img.data){ %>
                     <img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%" id="editbtn"
-                        src="data:image;base64,<%=img%>"> </a>
-                <% } else { %>
-                    <img style="float:right;margin-top:10px;margin-right:10px;width:40px;height:40px;border-radius:50%" id="editbtn"
-                                src="/<%= user.image_name%>"> </a>
-                <% } %>
+                        src="/uploads/<%=user.path%>"> </a>
 
 
             <span class="label label-success" id="rightadmin" style="float:right;margin-right:20px;background:#5CB85C;">
