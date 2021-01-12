@@ -12,7 +12,7 @@ const auth = require("./middlewares/auth")
 const admin_auth = require("./middlewares/admin_auth");
 app.use(expressLayouts);
 
-const upload = require("./controllers/multer")
+const uploadMulter = require("./controllers/multer")
 const user = require('./models/user');
 const community = require("./models/community");
 
@@ -126,7 +126,7 @@ app.get('/update',setLayout, async (req, res) => {
 
 
 
-app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
+app.post("/update", uploadMulter.upload.single('myImage'),setLayout, async (req, res) => {
 
     var obj = new Object();
     obj=req.body
@@ -154,16 +154,14 @@ app.post("/update", upload.single('myImage'),setLayout, async (req, res) => {
 
 app.get("/test",(req, res) => {
 
-    var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
 
     res.render("test",{ 
-        user:req.session.user,
-        img:thumb
+        user:req.session.user
     });
 
 });
 
-app.post("/addComm",upload.single('profilePic'),async (req, res) => {
+app.post("/addComm",uploadMulter.uploadComm.single('profilePic'),async (req, res) => {
     // console.log(req.body);
     // console.log(req.file);
     // console.log(req.session.user);
@@ -175,15 +173,13 @@ app.post("/addComm",upload.single('profilePic'),async (req, res) => {
     comm.owner.name = req.session.user.name;
     comm.owner.id = req.session.user._id;
     if (req.file)
-        comm.img.base64 = new Buffer.from(req.file.buffer).toString('base64')
+        comm.img_path = req.session.commId;
 
     try {
         const commu = await comm.save();
         console.log(commu);
-        var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
         res.render("AddCommunity", {
-            user: req.session.user,
-            img: thumb
+            user: req.session.user
         });
     } catch (err) {
         console.log(err);
@@ -193,10 +189,8 @@ app.post("/addComm",upload.single('profilePic'),async (req, res) => {
 
 app.get("/community/list",setLayout,async (req, res) => {
     try{
-            var thumb = new Buffer.from(req.session.user.img.data).toString('base64');
-            res.render('CommunityList', {
-                user: req.session.user,
-                img: thumb,
+            res.render('communityList', {
+                user: req.session.user
             })
     }catch(error){ 
         console.log(error);

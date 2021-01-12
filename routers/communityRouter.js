@@ -3,6 +3,7 @@ const User = require("../models/user");
 const router = express.Router();
 const upload = require("../controllers/multer")
 const community=require("../models/community")
+var ObjectID = require("mongodb").ObjectID;
 router.get("/",async (req,res)=>{
         res.render("adminProfile", {
             user: req.session.user,
@@ -16,9 +17,10 @@ router.get("/communities",async (req,res)=>{
 });
 
 router.get("/AddCommunity",(req,res)=>{
+    req.session.commId = new ObjectID();
     res.render("AddCommunity",{user: req.session.user})
 });
-router.post('/addComm',upload.single('profilePic'),async (req,res)=>{
+router.post('/addComm',upload.uploadComm.single('profilePic'),async (req,res)=>{
     // console.log(req.body);
     // console.log(req.file);
     var comm = new community();
@@ -29,7 +31,7 @@ router.post('/addComm',upload.single('profilePic'),async (req,res)=>{
     comm.owner.name = req.session.user.name;
     comm.owner.id = req.session.user._id;
     if (req.file)
-        comm.img_path = req.body.name+".jpg";
+        comm.img_path = req.session.commId+".jpg";
 
     try {
         const commu = await comm.save();

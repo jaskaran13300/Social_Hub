@@ -9,6 +9,20 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({ storage: storage });
+var storageComm = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.session.commId + '.jpg');
+    }
+});
 
-module.exports = upload;
+var upload = multer({ storage: storage });
+var uploadComm = multer({ storage: storageComm });
+
+
+module.exports = {
+    upload:upload,
+    uploadComm:uploadComm
+};
